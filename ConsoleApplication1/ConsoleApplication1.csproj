@@ -43,14 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandListener.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="IncomingMessage.cs" />
     <Compile Include="ConnectedHandler.cs" />
     <Compile Include="ConnectionWorker.cs" />
+    <Compile Include="Commands\CommandActor.cs" />
     <Compile Include="MessageListener.cs" />
     <Compile Include="PingHandler.cs" />
+    <Compile Include="Commands\Actors\Say.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

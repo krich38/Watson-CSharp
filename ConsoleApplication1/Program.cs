@@ -12,7 +12,7 @@ namespace ConsoleApplication1
             Program program = new Program();
             INSTANCE = program;
 
-            IRCServer server = new IRCServer("irc.moparisthebest.com", 6697, new string[] { "#bottest" });
+            IRCServer server = new IRCServer("irc.moparisthebest.com", 6697, new string[] { "#bottest" }, true);
             program.Connect(server);
         }
 
@@ -23,7 +23,7 @@ namespace ConsoleApplication1
             t.Start();
         }
 
-        internal bool IsRunning()
+        public bool IsRunning()
         {
             return true;
         }

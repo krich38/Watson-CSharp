@@ -49,12 +49,9 @@ namespace ConsoleApplication1
             string line = null;
             while ((line = reader.ReadLine()) != null)
             {
-
-
                 if (REGEX.IsMatch(line))
                 {
                     Match match = REGEX.Match(line);
-                    //Console.Write(line + "\n");
                     IncomingMessage msg = new IncomingMessage(server, line, match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[4].Value);
 
                     foreach (MessageListener ml in LISTENERS)
@@ -68,7 +65,7 @@ namespace ConsoleApplication1
                 }
                 else
                 {
-                    Console.Write("UNMATCHED LIKE SHIT\n");
+                    Console.Write("UNMATCHED\n");
                 }
 
 
@@ -85,11 +82,12 @@ namespace ConsoleApplication1
 
             LISTENERS.Add(new ConnectedHandler());
             LISTENERS.Add(new PingHandler());
+            LISTENERS.Add(new CommandListener());
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();
 
-            if (true)
+            if (server.IsSSL())
             {
                 RemoteCertificateValidationCallback certValidation;
                 if (_ValidateServerCertificate)

@@ -63,9 +63,29 @@
             return message;
         }
 
+        public string GetTarget()
+        {
+            return target;
+        }
+
         public string GetSource()
         {
             return source;
+        }
+
+        public bool HasMessage()
+        {
+            return message != null && message.Length > 0;
+        }
+
+        public bool IsDestChannel()
+        {
+            return GetCommand().Equals("PRIVMSG") && GetTarget().StartsWith("#");
+        }
+
+        public bool IsDestMe()
+        {
+            return GetCommand().Equals("PRIVMSG") && GetTarget().Equals("Watso");
         }
     }
 }
