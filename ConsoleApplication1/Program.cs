@@ -15,9 +15,10 @@ namespace ConsoleApplication1
 
 
         static void Main(string[] args)
-        {Program program = new Program();
-            INSTANCE = program; 
-            
+        {
+            Program program = new Program();
+            INSTANCE = program;
+
             IRCServer server = new IRCServer("irc.moparisthebest.com", 6697, new string[] { "#bottest" });
             program.Connect(server);
         }
@@ -36,9 +37,9 @@ namespace ConsoleApplication1
 
         public static Program GetInstance()
         {
-           
-                return INSTANCE;
-            
+
+            return INSTANCE;
+
         }
 
     }

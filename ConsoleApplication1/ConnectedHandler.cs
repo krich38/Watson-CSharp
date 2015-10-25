@@ -12,7 +12,7 @@ namespace ConsoleApplication1
         {
             if (msg.GetCommand().Equals("001"))
             {
-                foreach(string chan in msg.GetServer().GetChannels())
+                foreach (string chan in msg.GetServer().GetChannels())
                 {
                     msg.GetServer().Write("JOIN " + chan);
                 }

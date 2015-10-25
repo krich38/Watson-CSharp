@@ -54,12 +54,13 @@ namespace ConsoleApplication1
             while ((line = reader.ReadLine()) != null)
             {
 
-                
+
                 if (REGEX.IsMatch(line))
                 {
                     Match match = REGEX.Match(line);
                     //Console.Write(line + "\n");
-                    IncomingMessage msg = new IncomingMessage(server, line, match.Groups[3].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[1].Value);
+                    IncomingMessage msg = new IncomingMessage(server, line, match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[4].Value);
+
                     foreach (MessageListener ml in LISTENERS)
                     {
                         if (ml.ShouldHandle(msg))
@@ -87,7 +88,7 @@ namespace ConsoleApplication1
             server.SetWorker(this);
 
             LISTENERS.Add(new ConnectedHandler());
-
+            LISTENERS.Add(new PingHandler());
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();
@@ -116,8 +117,8 @@ namespace ConsoleApplication1
                 }
                 RemoteCertificateValidationCallback certValidationWithIrcAsSender = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
                     {
-     return certValidation(this, certificate, chain, sslPolicyErrors);
- };
+                        return certValidation(this, certificate, chain, sslPolicyErrors);
+                    };
                 LocalCertificateSelectionCallback selectionCallback = delegate (object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
                 {
                     if (localCertificates == null || localCertificates.Count == 0)
@@ -142,33 +143,33 @@ namespace ConsoleApplication1
                 {
                     sslStream.AuthenticateAsClient(IP);
                 }
-            
-            stream = sslStream;
-        }
+
+                stream = sslStream;
+            }
             this.reader = new StreamReader(stream);
             this.writer = new StreamWriter(stream);
 
-                
-                while (!stream.CanWrite) ;
-                this.writer.Write("NICK Watso\r\n");
-                this.writer.Write("USER watttoo 0 * :bigfat\r\n");
-                this.writer.Flush();
-            
+
+            while (!stream.CanWrite) ;
+            this.writer.Write("NICK Watso\r\n");
+            this.writer.Write("USER watttoo 0 * :bigfat\r\n");
+            this.writer.Flush();
+
         }
 
 
 
-    private bool _ValidateServerCertificate;
-    public X509Certificate SslClientCertificate
-    {
-        get
+        private bool _ValidateServerCertificate;
+        public X509Certificate SslClientCertificate
         {
-            return _SslClientCertificate;
-        }
-        set
-        {
-            _SslClientCertificate = value;
+            get
+            {
+                return _SslClientCertificate;
+            }
+            set
+            {
+                _SslClientCertificate = value;
+            }
         }
     }
-}
 }

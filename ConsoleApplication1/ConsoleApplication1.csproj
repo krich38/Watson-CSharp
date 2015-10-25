@@ -47,6 +47,7 @@
     <Compile Include="ConnectedHandler.cs" />
     <Compile Include="ConnectionWorker.cs" />
     <Compile Include="MessageListener.cs" />
+    <Compile Include="PingHandler.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,7 +20,7 @@ namespace ConsoleApplication1
         private string message;
         private string targetParams;
         private IRCServer server;
-        
+
         public IncomingMessage(IRCServer server, string raw, string source, string command, string target, string message)
         {
             //Console.Write("CMD: " + command + ", target: " + target + ", MSG: " + message + ", source: " + source + "\n");
@@ -31,7 +31,7 @@ namespace ConsoleApplication1
             if (target != null)
             {
                 string[] dummy = target.Split(' ');
-                
+
                 this.target = dummy[0];
                 this.targetParams = (dummy.Length == 2 ? dummy[1] : null);
             }
@@ -62,6 +62,16 @@ namespace ConsoleApplication1
         public IRCServer GetServer()
         {
             return server;
+        }
+
+        public string GetMessage()
+        {
+            return message;
+        }
+
+        public string GetSource()
+        {
+            return source;
         }
     }
 }
