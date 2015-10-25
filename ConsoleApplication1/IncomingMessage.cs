@@ -19,11 +19,12 @@ namespace ConsoleApplication1
 
         private string message;
         private string targetParams;
-
+        private IRCServer server;
         
-        public IncomingMessage(string raw, string source, string command, string target, string message)
+        public IncomingMessage(IRCServer server, string raw, string source, string command, string target, string message)
         {
             //Console.Write("CMD: " + command + ", target: " + target + ", MSG: " + message + ", source: " + source + "\n");
+            this.server = server;
             this.raw = raw;
             this.source = source;
             this.command = command;
@@ -56,6 +57,11 @@ namespace ConsoleApplication1
         public string GetRaw()
         {
             return raw;
+        }
+
+        public IRCServer GetServer()
+        {
+            return server;
         }
     }
 }

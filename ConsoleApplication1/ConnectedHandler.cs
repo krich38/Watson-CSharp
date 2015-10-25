@@ -10,7 +10,18 @@ namespace ConsoleApplication1
     {
         public void Handle(IncomingMessage msg)
         {
-            Console.Write("Connected doe");
+            if (msg.GetCommand().Equals("001"))
+            {
+                foreach(string chan in msg.GetServer().GetChannels())
+                {
+                    msg.GetServer().Write("JOIN " + chan);
+                }
+                msg.GetServer().Flush();
+            }
+            else if (msg.GetRaw().Contains("No more connections allowed from your host via this connect class"))
+            {
+                // todo: set reconnect off here
+            }
         }
 
         public bool ShouldHandle(IncomingMessage msg)

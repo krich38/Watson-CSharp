@@ -18,13 +18,13 @@ namespace ConsoleApplication1
         {Program program = new Program();
             INSTANCE = program; 
             
-            Settings server = new Settings("irc.freenode.net", 6667);
+            IRCServer server = new IRCServer("irc.moparisthebest.com", 6697, new string[] { "#bottest" });
             program.Connect(server);
         }
 
-        private void Connect(Settings settings)
+        private void Connect(IRCServer server)
         {
-            ConnectionWorker worker = new ConnectionWorker(settings.getIp(), settings.getPort());
+            ConnectionWorker worker = new ConnectionWorker(server);
             Thread t = new Thread(worker.Process);
             t.Start();
         }
