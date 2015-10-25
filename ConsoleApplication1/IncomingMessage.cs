@@ -23,6 +23,7 @@ namespace ConsoleApplication1
         
         public IncomingMessage(string raw, string source, string command, string target, string message)
         {
+            //Console.Write("CMD: " + command + ", target: " + target + ", MSG: " + message + ", source: " + source + "\n");
             this.raw = raw;
             this.source = source;
             this.command = command;

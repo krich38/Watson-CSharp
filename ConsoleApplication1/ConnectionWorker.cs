@@ -20,7 +20,7 @@ namespace ConsoleApplication1
         private Program program;
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
-        //private const List<MessageListener> LISTENERS
+        private List<MessageListener> LISTENERS = new List<MessageListener>();
 
         public void Process()
         {
@@ -34,8 +34,15 @@ namespace ConsoleApplication1
                 {
                     Match match = REGEX.Match(line);
                     //Console.Write(line + "\n");
-                    IncomingMessage msg = new IncomingMessage(line, match.Groups[0].Value, match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
-                    Console.Write(msg.GetRaw() + "\n");
+                    IncomingMessage msg = new IncomingMessage(line, match.Groups[3].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[1].Value);
+                    foreach(MessageListener ml in LISTENERS)
+                    {
+                        if(ml.ShouldHandle(msg))
+                        {
+                            ml.Handle(msg);
+                        }
+                    }
+                    //Console.Write(msg.GetRaw() + "\n");
                 } else
                 {
                     Console.Write("UNMATCHED LIKE SHIT\n");
@@ -50,6 +57,9 @@ namespace ConsoleApplication1
             this.IP = IP;
             this.PORT = PORT;
             this.program = Program.GetInstance();
+
+            LISTENERS.Add(new ConnectedHandler());
+
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();

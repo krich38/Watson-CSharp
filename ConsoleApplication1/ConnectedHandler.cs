@@ -15,6 +15,7 @@ namespace ConsoleApplication1
 
         public bool ShouldHandle(IncomingMessage msg)
         {
+            //Console.Write(msg.GetCommand());
             return msg.GetCommand().Equals("001") || msg.GetRaw().Contains("No more connections allowed from your host via this connect class");
         }
     }
