@@ -8,6 +8,7 @@ using System.Net.Security;
 using System.Net;
 using System.Security.Authentication;
 using ConsoleApplication1.Message;
+using ConsoleApplication1.Message.Handler;
 
 namespace ConsoleApplication1
 {
@@ -85,6 +86,7 @@ namespace ConsoleApplication1
             LISTENERS.Add(new PingHandler());
             LISTENERS.Add(new CommandListener());
             LISTENERS.Add(new MarkovListener());
+            LISTENERS.Add(new ProtocolHandler());
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();

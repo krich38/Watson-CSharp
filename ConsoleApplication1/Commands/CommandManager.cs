@@ -16,6 +16,7 @@ namespace ConsoleApplication1
         {
             COMMANDS.Add("say", new Say());
             COMMANDS.Add("chat", new Markov());
+            COMMANDS.Add("nick", new ChangeNick());
 
         }
 

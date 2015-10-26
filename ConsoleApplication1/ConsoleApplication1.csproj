@@ -66,9 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Actors\ChangeNick.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Message\Handler\ProtocolHandler.cs" />
     <Compile Include="Message\MarkovListener.cs" />
     <Compile Include="Message\CommandListener.cs" />
     <Compile Include="Commands\CommandManager.cs" />

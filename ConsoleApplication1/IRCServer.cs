@@ -6,11 +6,12 @@ namespace ConsoleApplication1
     class IRCServer
     {
         private string IP;
-        private string nick, pass,altnick,realname;
+        private string nick, pass,altnick,realname, lastnick;
         private int PORT;
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
         private bool ssl;
+        private bool attemptingNick;
 
         public IRCServer(string IP, int PORT, List<IRCChannel> channels)
         {
@@ -86,6 +87,31 @@ namespace ConsoleApplication1
         public string GetRealName()
         {
             return realname;
+        }
+
+        public void SetNick(string nick)
+        {
+            this.nick = nick;
+        }
+
+        public void SetAttemptNickChange(bool attemptingNick)
+        {
+            this.attemptingNick = attemptingNick;
+
+            if(attemptingNick)
+            {
+                lastnick = nick;
+            }
+        }
+
+        public string GetLastNick()
+        {
+            return lastnick;
+        }
+
+        public bool IsAttemptNickChange()
+        {
+            return attemptingNick;
         }
     }
 

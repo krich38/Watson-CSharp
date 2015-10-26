@@ -33,7 +33,6 @@ namespace ConsoleApplication1
 
         public static void ExecuteUpdate(string sql)
         {
-            Console.WriteLine(sql);
             SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
             command.ExecuteNonQuery();
 

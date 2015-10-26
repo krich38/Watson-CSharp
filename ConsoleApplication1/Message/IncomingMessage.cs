@@ -92,5 +92,10 @@
         {
             GetServer().SendMessage(GetTarget(), text);
         }
+
+        public string GetNick()
+        {
+           return  GetSource().Substring(0, GetSource().IndexOf('!'));
+        }
     }
 }
