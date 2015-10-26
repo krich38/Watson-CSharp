@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApplication1
 {
@@ -6,18 +7,18 @@ namespace ConsoleApplication1
     {
         private String IP;
         private int PORT;
-        private string[] channels;
+        private List<IRCChannel> channels;
         private ConnectionWorker worker;
         private bool ssl;
 
-        public IRCServer(string IP, int PORT, string[] channels)
+        public IRCServer(string IP, int PORT, List<IRCChannel> channels)
         {
             this.IP = IP;
             this.PORT = PORT;
             this.channels = channels;
         }
 
-        public IRCServer(string IP, int PORT, string[] channels, bool ssl)
+        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool ssl)
         {
             this.IP = IP;
             this.PORT = PORT;
@@ -28,8 +29,8 @@ namespace ConsoleApplication1
 
         public void Write(string text)
         {
-            
-            if(!text.EndsWith("\r\n"))
+
+            if (!text.EndsWith("\r\n"))
             {
                 text = text + "\r\n";
             }
@@ -57,7 +58,7 @@ namespace ConsoleApplication1
             return this.PORT;
         }
 
-        public string[] GetChannels()
+        public List<IRCChannel> GetChannels()
         {
             return channels;
         }
@@ -70,6 +71,23 @@ namespace ConsoleApplication1
         public bool IsSSL()
         {
             return ssl;
+        }
+    }
+
+    class IRCChannel
+    {
+        private string channel;
+        private bool reconnect;
+
+        public IRCChannel(string channel, bool reconnect)
+        {
+            this.channel = channel;
+            this.reconnect = reconnect;
+        }
+
+        public string GetName()
+        {
+            return channel;
         }
     }
 }

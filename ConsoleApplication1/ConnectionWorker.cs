@@ -45,7 +45,7 @@ namespace ConsoleApplication1
 
         public void Process()
         {
-
+            Console.WriteLine("PROCESS");
             string line = null;
             while ((line = reader.ReadLine()) != null)
             {
@@ -86,7 +86,6 @@ namespace ConsoleApplication1
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();
-
             if (server.IsSSL())
             {
                 RemoteCertificateValidationCallback certValidation;

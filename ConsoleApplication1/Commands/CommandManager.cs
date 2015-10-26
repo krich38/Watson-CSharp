@@ -9,16 +9,17 @@ namespace ConsoleApplication1
     class CommandManager
     {
         private Dictionary<string, CommandActor> COMMANDS = new Dictionary<string, CommandActor>();
+        public static Random RANDOM = new Random();
         private static CommandManager INSTANCE;
         public CommandManager()
         {
             COMMANDS.Add("say", new Say());
 
-            }
+        }
 
         public static CommandManager getInstance()
         {
-            if(INSTANCE == null)
+            if (INSTANCE == null)
             {
                 INSTANCE = new CommandManager();
             }

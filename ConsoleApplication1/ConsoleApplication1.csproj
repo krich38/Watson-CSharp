@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +50,14 @@
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.98.1\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.98.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.98.1\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.98.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.98.1\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,15 +66,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Actors\Markov.cs" />
+    <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Commands\CommandListener.cs" />
+    <Compile Include="Message\MarkovListener.cs" />
+    <Compile Include="Message\CommandListener.cs" />
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="IncomingMessage.cs" />
-    <Compile Include="ConnectedHandler.cs" />
+    <Compile Include="Message\IncomingMessage.cs" />
+    <Compile Include="Message\Handler\ConnectedHandler.cs" />
     <Compile Include="ConnectionWorker.cs" />
     <Compile Include="Commands\CommandActor.cs" />
-    <Compile Include="MessageListener.cs" />
-    <Compile Include="PingHandler.cs" />
+    <Compile Include="Message\MessageListener.cs" />
+    <Compile Include="Message\Handler\PingHandler.cs" />
     <Compile Include="Commands\Actors\Say.cs" />
     <Compile Include="IRCServer.cs" />
     <Compile Include="Program.cs" />
