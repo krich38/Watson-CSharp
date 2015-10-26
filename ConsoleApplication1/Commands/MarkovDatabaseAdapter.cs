@@ -38,7 +38,7 @@ namespace ConsoleApplication1.Commands
             return null;
         }
 
-        public static String MarkovFind(String seed1, String seed2)
+        public static string MarkovFind(string seed1, string seed2)
         {
             SQLiteCommand cmd;
             if (seed2 == null)
@@ -68,8 +68,6 @@ namespace ConsoleApplication1.Commands
 
                 return MarkovGenerate(found1, found2);
             }
-
-
             return null;
         }
 
@@ -118,12 +116,12 @@ namespace ConsoleApplication1.Commands
             }
         }
 
-        private static int MarkovFillForwards(StringBuilder result, int wordcount, String seed1, String seed2)
+        private static int MarkovFillForwards(StringBuilder result, int wordcount, string seed1, string seed2)
         {
             int count = 0;
             for (int i = 0; i < wordcount / 2; i++)
             {
-                String seed3 = MarkovNextSeed(seed1, seed2);
+                string seed3 = MarkovNextSeed(seed1, seed2);
                 if (seed3 == null || seed3.Equals("\n"))
                 {
                     break;
@@ -140,7 +138,7 @@ namespace ConsoleApplication1.Commands
             return count;
         }
 
-        private static String MarkovNextSeed(String seed1, String seed2)
+        private static string MarkovNextSeed(string seed1, string seed2)
         {
             SQLiteCommand cmd = new SQLiteCommand("select seed_c from mem.markov where seed_a = @s1 and seed_b = @s2 order by random() limit 1", connection);
             cmd.Parameters.AddWithValue("@s1", seed1);
@@ -157,12 +155,12 @@ namespace ConsoleApplication1.Commands
             return null;
         }
 
-        private static int MarkovFillBackwards(StringBuilder result, int wordcount, String seed1, String seed2)
+        private static int MarkovFillBackwards(StringBuilder result, int wordcount, string seed1, string seed2)
         {
             int count = 0;
             for (int i = 0; i < wordcount; i++)
             {
-                String seed0 = MarkovPreviousSeed(seed1, seed2);
+                string seed0 = MarkovPreviousSeed(seed1, seed2);
                 if (seed0 == null || seed0.Equals("\n"))
                 {
                     break;
@@ -179,11 +177,8 @@ namespace ConsoleApplication1.Commands
             return count;
         }
 
-        private static string MarkovPreviousSeed(String seed2, String seed3)
+        private static string MarkovPreviousSeed(string seed2, string seed3)
         {
-
-
-
             SQLiteCommand cmd = new SQLiteCommand("select seed_a from mem.markov where seed_b = @s1 and seed_c = @s2 order by random() limit 1", connection);
             cmd.Parameters.AddWithValue("@s1", seed2);
             cmd.Parameters.AddWithValue("@s2", seed3);
@@ -215,13 +210,10 @@ namespace ConsoleApplication1.Commands
 
         private static void MarkovInsert(string seed1, string seed2, string seed3)
         {
-
             SQLiteCommand cmd = new SQLiteCommand("insert into mem.markov(seed_a, seed_b, seed_c) values(@s1, @s2, @s3)", connection);
-
             cmd.Parameters.AddWithValue("@s1", seed1);
             cmd.Parameters.AddWithValue("@s2", seed2);
             cmd.Parameters.AddWithValue("@s3", seed3);
-
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
 
@@ -229,7 +221,6 @@ namespace ConsoleApplication1.Commands
             cmd.Parameters.AddWithValue("@s1", seed1);
             cmd.Parameters.AddWithValue("@s2", seed2);
             cmd.Parameters.AddWithValue("@s3", seed3);
-
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
 
