@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApplication1.Commands
 {
@@ -13,30 +10,66 @@ namespace ConsoleApplication1.Commands
 
         public static bool Setup()
         {
-
             connection = Database.GetConnection();
-
             Database.ExecuteUpdate("create table if not exists markov (seed_a TEXT, seed_b TEXT, seed_c TEXT, unique(seed_a, seed_b, seed_c) on conflict ignore)");
             Database.ExecuteUpdate("create table if not exists markov (seed_a TEXT, seed_b TEXT, seed_c TEXT, unique(seed_a, seed_b, seed_c) on conflict ignore)");
             Database.ExecuteUpdate("ATTACH DATABASE ':memory:' AS mem");
             Database.ExecuteUpdate("create table if not exists mem.markov (seed_a TEXT, seed_b TEXT, seed_c TEXT, unique(seed_a, seed_b, seed_c) on conflict ignore)");
             Database.ExecuteUpdate("insert into mem.markov (seed_a, seed_b, seed_c) select seed_a, seed_b, seed_c from markov");
-
-
-
             return true;
         }
 
         public static string MarkovGenerate()
         {
-
             SQLiteDataReader rs = Database.ExecuteQuery("select seed_a, seed_b from mem.markov order by random() limit 1");
             if (rs.HasRows)
             {
-                String found1 = rs.GetString(1);
-                String found2 = rs.GetString(2);
+                string found1 = null, found2 = null;
+                if (rs.Read())
+                {
+                    found1 = rs["seed_a"].ToString();
+                }
+                if (rs.Read())
+                {
+                    found2 = rs["seed_b"].ToString();
+                }
                 return MarkovGenerate(found1, found2);
             }
+            return null;
+        }
+
+        public static String MarkovFind(String seed1, String seed2)
+        {
+            SQLiteCommand cmd;
+            if (seed2 == null)
+            {
+                cmd = new SQLiteCommand("select seed_a, seed_b from mem.markov where seed_a = @s1 or seed_b = @s2 COLLATE NOCASE order by random() limit 1", connection);
+                cmd.Parameters.AddWithValue("@s1", seed1);
+                cmd.Parameters.AddWithValue("@s2", seed2);
+            }
+            else
+            {
+                cmd = new SQLiteCommand("select seed_a, seed_b from mem.markov where seed_a in (@s1, @s2) or seed_b in (@s1, @s2) COLLATE NOCASE order by random() limit 1", connection);
+                cmd.Parameters.AddWithValue("@s1", seed1);
+                cmd.Parameters.AddWithValue("@s2", seed2);
+            }
+            SQLiteDataReader rs = cmd.ExecuteReader();
+            if (rs.HasRows)
+            {
+                string found1 = null, found2 = null;
+                if (rs.Read())
+                {
+                    found1 = rs["seed_a"].ToString();
+                }
+                if (rs.Read())
+                {
+                    found2 = rs["seed_b"].ToString();
+                }
+
+                return MarkovGenerate(found1, found2);
+            }
+
+
             return null;
         }
 
@@ -109,12 +142,16 @@ namespace ConsoleApplication1.Commands
 
         private static String MarkovNextSeed(String seed1, String seed2)
         {
-
-
-            SQLiteDataReader rs = Database.ExecuteQuery("select seed_c from mem.markov where seed_a = " + seed1 + " and seed_b = " + seed2 + " order by random() limit 1");
+            SQLiteCommand cmd = new SQLiteCommand("select seed_c from mem.markov where seed_a = @s1 and seed_b = @s2 order by random() limit 1", connection);
+            cmd.Parameters.AddWithValue("@s1", seed1);
+            cmd.Parameters.AddWithValue("@s2", seed2);
+            SQLiteDataReader rs = cmd.ExecuteReader();
             if (rs.HasRows)
             {
-                return rs.GetString(1);
+                if (rs.Read())
+                {
+                    return rs["seed_c"].ToString();
+                }
             }
 
             return null;
@@ -146,10 +183,18 @@ namespace ConsoleApplication1.Commands
         {
 
 
-            SQLiteDataReader rs = Database.ExecuteQuery("select seed_a from mem.markov where seed_b = " + seed2 + " and seed_c = " + seed3 + " order by random() limit 1");
+
+            SQLiteCommand cmd = new SQLiteCommand("select seed_a from mem.markov where seed_b = @s1 and seed_c = @s2 order by random() limit 1", connection);
+            cmd.Parameters.AddWithValue("@s1", seed2);
+            cmd.Parameters.AddWithValue("@s2", seed3);
+
+            SQLiteDataReader rs = cmd.ExecuteReader();
             if (rs.HasRows)
             {
-                return rs.GetString(1);
+                if (rs.Read())
+                {
+                    return rs["seed_a"].ToString();
+                }
             }
 
             return null;
@@ -170,8 +215,24 @@ namespace ConsoleApplication1.Commands
 
         private static void MarkovInsert(string seed1, string seed2, string seed3)
         {
-            Database.ExecuteUpdate("insert into mem.markov (seed_a, seed_b, seed_c) values (" + seed1 + ", " + seed2 + ", " + seed3 + ")");
-            Database.ExecuteUpdate("insert into markov (seed_a, seed_b, seed_c) values (" + seed1 + ", " + seed2 + ", " + seed3 + ")");
+
+            SQLiteCommand cmd = new SQLiteCommand("insert into mem.markov(seed_a, seed_b, seed_c) values(@s1, @s2, @s3)", connection);
+
+            cmd.Parameters.AddWithValue("@s1", seed1);
+            cmd.Parameters.AddWithValue("@s2", seed2);
+            cmd.Parameters.AddWithValue("@s3", seed3);
+
+            cmd.ExecuteNonQuery();
+            cmd.Parameters.Clear();
+
+            cmd = new SQLiteCommand("insert into markov (seed_a, seed_b, seed_c) values (@s1, @s2, @s3)", connection);
+            cmd.Parameters.AddWithValue("@s1", seed1);
+            cmd.Parameters.AddWithValue("@s2", seed2);
+            cmd.Parameters.AddWithValue("@s3", seed3);
+
+            cmd.ExecuteNonQuery();
+            cmd.Parameters.Clear();
+
         }
     }
 }

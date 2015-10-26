@@ -57,7 +57,7 @@ namespace ConsoleApplication1
 
             }
             Console.WriteLine("Loaded " + toConnect.Count);
-            return true;
+            return Database.EstablishConnection();
         }
         private void ConnectAll()
         {

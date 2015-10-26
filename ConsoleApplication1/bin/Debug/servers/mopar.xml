@@ -1,6 +1,6 @@
 <server>
 	<connection ip="irc.moparisthebest.com" port="6697">
-		<name>Watson</name>
+		<name>Waton</name>
 		<pass>yamaha38</pass>
 		<altnick>Wattson</altnick>
 		<realname>Watson</realname>

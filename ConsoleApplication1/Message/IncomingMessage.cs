@@ -87,5 +87,10 @@
         {
             return GetCommand().Equals("PRIVMSG") && GetTarget().ToLower().Equals(server.GetNick().ToLower());
         }
+
+        public void SendChat(string text)
+        {
+            GetServer().SendMessage(GetTarget(), text);
+        }
     }
 }

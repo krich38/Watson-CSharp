@@ -31,6 +31,14 @@ namespace ConsoleApplication1.Message
         {
             return true;
         }
+
+        public MarkovListener()
+        {
+            if(!MarkovDatabaseAdapter.Setup())
+            {
+                // oh no
+            }
+        }
     }
 
 }

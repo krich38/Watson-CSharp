@@ -11,6 +11,21 @@ namespace ConsoleApplication1
     {
         private static SQLiteConnection m_Connection;
 
+        public static bool EstablishConnection()
+        {
+            try
+            {
+                m_Connection = new SQLiteConnection("Data Source=watson.db;Version=3;");
+                m_Connection.Open();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Source);
+                return false;
+            }
+        }
+
         public static SQLiteConnection GetConnection()
         {
             return m_Connection;
@@ -18,6 +33,7 @@ namespace ConsoleApplication1
 
         public static void ExecuteUpdate(string sql)
         {
+            Console.WriteLine(sql);
             SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
             command.ExecuteNonQuery();
 

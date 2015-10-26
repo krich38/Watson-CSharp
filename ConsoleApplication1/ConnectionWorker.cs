@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Net;
 using System.Security.Authentication;
+using ConsoleApplication1.Message;
 
 namespace ConsoleApplication1
 {
@@ -83,6 +84,7 @@ namespace ConsoleApplication1
             LISTENERS.Add(new ConnectedHandler());
             LISTENERS.Add(new PingHandler());
             LISTENERS.Add(new CommandListener());
+            LISTENERS.Add(new MarkovListener());
 
             this.connection = new TcpClient(IP, PORT);
             this.stream = connection.GetStream();
