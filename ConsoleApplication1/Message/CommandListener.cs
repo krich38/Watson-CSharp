@@ -10,9 +10,9 @@ namespace ConsoleApplication1
     class CommandListener : MessageListener
     {
         private CommandManager commands;
-        private const string USER_PATTERN = "^Watso[:,]? .+";
+
         private const string COMMAND_PATTERN = "(\\S+?)(?:[,:]? (.+))?";
-        public Regex REGEX = new Regex(USER_PATTERN);
+
         public Regex COMMAND_REGEX = new Regex(COMMAND_PATTERN);
 
         public void Handle(IncomingMessage msg)
@@ -34,7 +34,7 @@ namespace ConsoleApplication1
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-
+            Regex REGEX = new Regex("^" + msg.GetServer().GetNick() + "[:,]? .+");
             if ((msg.IsDestChannel() && REGEX.IsMatch(msg.GetMessage())) || msg.IsDestMe())
             {
                 string text = msg.GetMessage().Substring(msg.GetMessage().IndexOf(' ') + 1);
@@ -46,12 +46,12 @@ namespace ConsoleApplication1
                         CommandActor commandActor = commands.GetCommand(command);
 
                         string host = msg.GetSource().Split('@')[1];
-
                         return true;
 
 
                     }
                 }
+                
             }
             return false;
         }

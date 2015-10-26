@@ -85,7 +85,7 @@
 
         public bool IsDestMe()
         {
-            return GetCommand().Equals("PRIVMSG") && GetTarget().Equals("Watso");
+            return GetCommand().Equals("PRIVMSG") && GetTarget().ToLower().Equals(server.GetNick().ToLower());
         }
     }
 }

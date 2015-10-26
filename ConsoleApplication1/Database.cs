@@ -22,5 +22,11 @@ namespace ConsoleApplication1
             command.ExecuteNonQuery();
 
         }
+
+        public static SQLiteDataReader ExecuteQuery(String sql)
+        {
+            SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
+            return command.ExecuteReader();
+        }
     }
 }

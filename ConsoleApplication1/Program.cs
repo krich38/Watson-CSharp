@@ -52,7 +52,7 @@ namespace ConsoleApplication1
                     channels.Add(chan);
 
                 }
-                IRCServer server = new IRCServer(ip, port, channels, ssl);
+                IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
                 toConnect.Add(server);
 
             }

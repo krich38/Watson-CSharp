@@ -144,8 +144,8 @@ namespace ConsoleApplication1
 
 
             while (!stream.CanWrite) ;
-            this.writer.Write("NICK Watso\r\n");
-            this.writer.Write("USER watttoo 0 * :bigfat\r\n");
+            this.writer.Write("NICK " + server.GetNick() + "\r\n");
+            this.writer.Write("USER " + server.GetRealName() + " 0 * :bigfat\r\n");
             this.writer.Flush();
 
         }

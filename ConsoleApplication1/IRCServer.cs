@@ -5,7 +5,8 @@ namespace ConsoleApplication1
 {
     class IRCServer
     {
-        private String IP;
+        private string IP;
+        private string nick, pass,altnick,realname;
         private int PORT;
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
@@ -18,12 +19,16 @@ namespace ConsoleApplication1
             this.channels = channels;
         }
 
-        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool ssl)
+        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool ssl, string nick, string pass, string altnick, string realname)
         {
             this.IP = IP;
             this.PORT = PORT;
             this.channels = channels;
             this.ssl = ssl;
+            this.nick = nick;
+            this.pass = pass;
+            this.altnick = altnick;
+            this.realname = realname;
 
         }
 
@@ -48,7 +53,7 @@ namespace ConsoleApplication1
             worker.Flush();
         }
 
-        public String getIp()
+        public string getIp()
         {
             return this.IP;
         }
@@ -72,6 +77,16 @@ namespace ConsoleApplication1
         {
             return ssl;
         }
+
+        public string GetNick()
+        {
+            return nick;
+        }
+
+        public string GetRealName()
+        {
+            return realname;
+        }
     }
 
     class IRCChannel
@@ -89,5 +104,7 @@ namespace ConsoleApplication1
         {
             return channel;
         }
+
+        
     }
 }

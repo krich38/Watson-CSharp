@@ -14,6 +14,7 @@ namespace ConsoleApplication1
         public CommandManager()
         {
             COMMANDS.Add("say", new Say());
+            COMMANDS.Add("chat", new Markov());
 
         }
 

@@ -6,7 +6,8 @@
 		<realname>Watson</realname>
 		<ssl>true</ssl>
 		<channels>
-			<channel name="#triumvirate" reconnect="true"></channel>
+			<channel name="#bottest" reconnect="true"></channel>
+			<channel name="#bottest" reconnect="true"></channel>
 		</channels>
 	</connection>
 </server>
