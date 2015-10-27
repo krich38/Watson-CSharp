@@ -59,6 +59,19 @@ namespace ConsoleApplication1
             return this.IP;
         }
 
+        public IRCChannel GetChannel(string name)
+        {
+            foreach(IRCChannel chan in channels)
+            {
+                if(chan.GetName().Equals(name))
+                {
+                    return chan;
+                }
+            }
+
+            return null;
+        }
+
         public int getPort()
         {
             return this.PORT;
@@ -119,11 +132,39 @@ namespace ConsoleApplication1
     {
         private string channel;
         private bool reconnect;
+        private Dictionary<string, int> users;
+            
+        public enum ChannelAccess
+        {
+            OPERATOR,
+            REGULAR_USER, ADMIN,OWNER,VOICE, HALF_OPERATOR
+        }
+
+        public static ChannelAccess GetChannelAccessByCode(char code)
+        {
+            
+            switch(code)
+            {
+                case '@':
+                    return ChannelAccess.OPERATOR;
+                case '&':
+                    return ChannelAccess.ADMIN;
+                case '~':
+                    return ChannelAccess.OWNER;
+                case '+':
+                    return ChannelAccess.VOICE;
+                case '%':
+                    return ChannelAccess.HALF_OPERATOR;
+            }
+            return ChannelAccess.REGULAR_USER;
+        }
+        
 
         public IRCChannel(string channel, bool reconnect)
         {
             this.channel = channel;
             this.reconnect = reconnect;
+            users = new Dictionary<string, int>();
         }
 
         public string GetName()
@@ -131,6 +172,14 @@ namespace ConsoleApplication1
             return channel;
         }
 
-        
+        public void UpdateUsers(string user, int access)
+        {
+            users[user] = access;
+        }
+
+        public Dictionary<string, int> GetUsers()
+        {
+            return users;
+        }
     }
 }
