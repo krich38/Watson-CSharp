@@ -18,6 +18,7 @@ namespace ConsoleApplication1
             COMMANDS.Add("chat", new Markov());
             COMMANDS.Add("nick", new ChangeNick());
             COMMANDS.Add("kill", new Kill());
+            COMMANDS.Add("uptime", new Uptime());
 
         }
 

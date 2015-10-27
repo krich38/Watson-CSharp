@@ -9,11 +9,13 @@ namespace ConsoleApplication1
     class Program
     {
         private static volatile Program INSTANCE;
+        
         private List<IRCServer> toConnect;
         private List<IRCServer> connected;
 
         static void Main(string[] args)
         {
+            
             Program program = new Program();
             if (program.Load())
             {
@@ -44,28 +46,24 @@ namespace ConsoleApplication1
                 string realname = el.Element("realname").Value;
                 bool ssl = bool.Parse(el.Element("ssl").Value);
                 List<IRCChannel> channels = new List<IRCChannel>();
-                Console.WriteLine();
-                try {
-                    XElement cc = el.Element("channels");
-                    foreach(XElement dd in cc.Elements())
-                    {
-                        string channel = dd.Element("name").Value;
-                        bool reconnect = bool.Parse(dd.Element("reconnect").Value);
-                        Console.WriteLine(channel + " : " + reconnect);
-                        IRCChannel chan = new IRCChannel(channel, reconnect);
-                        channels.Add(chan);
-                    }
-                    
 
-                    IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
-                    toConnect.Add(server);
-                } catch(Exception e)
+                XElement cc = el.Element("channels");
+                foreach (XElement dd in cc.Elements())
                 {
-                    Console.WriteLine(e);
+                    string channel = dd.Element("name").Value;
+                    bool reconnect = bool.Parse(dd.Element("reconnect").Value);
+                    Console.WriteLine(channel + " : " + reconnect);
+                    IRCChannel chan = new IRCChannel(channel, reconnect);
+                    channels.Add(chan);
                 }
 
+
+                IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
+                toConnect.Add(server);
+
+
             }
-            Console.WriteLine("Loaded " + toConnect.Count);
+            Console.WriteLine("Loaded " + toConnect.Count + " servers");
             return Database.EstablishConnection();
         }
         private void ConnectAll()
