@@ -8,10 +8,7 @@ namespace ConsoleApplication1.Commands.Actors
 {
     class ChangeNick : CommandActor
     {
-        public UserAccess GetRequiredAccess()
-        {
-            return UserAccess.FULL_USER;
-        }
+
 
         public void HandleCommand(IRCServer server, string command, IncomingMessage msg)
         {
@@ -23,6 +20,9 @@ namespace ConsoleApplication1.Commands.Actors
                 server.Flush();
                 
             }
+        }        public UserAccess GetRequiredAccess()
+        {
+            return UserAccess.HALF_USER;
         }
     }
 }

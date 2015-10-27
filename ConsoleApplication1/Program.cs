@@ -9,13 +9,14 @@ namespace ConsoleApplication1
     class Program
     {
         private static volatile Program INSTANCE;
-        
+
         private List<IRCServer> toConnect;
         private List<IRCServer> connected;
+        private Dictionary<string, UserAccess> users;
 
         static void Main(string[] args)
         {
-            
+
             Program program = new Program();
             if (program.Load())
             {
@@ -31,6 +32,7 @@ namespace ConsoleApplication1
         {
             string[] files = Directory.GetFiles("servers/");
             toConnect = new List<IRCServer>(files.Length);
+            users = new Dictionary<string, UserAccess>();
             foreach (string file in files)
             {
                 XDocument xd = XDocument.Load(file);
@@ -57,6 +59,16 @@ namespace ConsoleApplication1
                     channels.Add(chan);
                 }
 
+                XElement users = el.Element("users");
+                foreach (XElement user in users.Elements())
+                {
+                    string host = user.Element("host").Value;
+                    string access = user.Element("access").Value;
+                    UserAccess ua = UserAccessAttr.GetByAccess(int.Parse(access));
+                    this.users.Add(host, ua);
+
+                }
+
 
                 IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
                 toConnect.Add(server);
@@ -66,6 +78,16 @@ namespace ConsoleApplication1
             Console.WriteLine("Loaded " + toConnect.Count + " servers");
             return Database.EstablishConnection();
         }
+
+        public UserAccess GetUserAccess(string host)
+        {
+
+            if (users.ContainsKey(host))
+            {
+                return users[host];
+            }
+            return UserAccess.ANYONE;
+        }
         private void ConnectAll()
         {
             connected = new List<IRCServer>();
@@ -74,7 +96,7 @@ namespace ConsoleApplication1
                 ConnectionWorker worker = new ConnectionWorker(server);
                 Thread t = new Thread(worker.Process);
                 t.Start();
-                Console.WriteLine("Starting " + server.getIp());
+                Console.WriteLine("Starting " + server.IP);
             }
         }
 

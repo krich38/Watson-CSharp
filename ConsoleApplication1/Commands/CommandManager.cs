@@ -19,6 +19,8 @@ namespace ConsoleApplication1
             COMMANDS.Add("nick", new ChangeNick());
             COMMANDS.Add("kill", new Kill());
             COMMANDS.Add("uptime", new Uptime());
+            COMMANDS.Add("part", new ChannelChange());
+            COMMANDS.Add("join", new ChannelChange());
 
         }
 

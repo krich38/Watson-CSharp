@@ -67,11 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Actors\ChangeNick.cs" />
+    <Compile Include="Commands\Actors\ChannelChange.cs" />
     <Compile Include="Commands\Actors\Kill.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\Actors\Uptime.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Message\Handler\KickHandler.cs" />
     <Compile Include="Message\Handler\ProtocolHandler.cs" />
     <Compile Include="Message\MarkovListener.cs" />
     <Compile Include="Message\CommandListener.cs" />

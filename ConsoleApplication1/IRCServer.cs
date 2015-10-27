@@ -5,9 +5,19 @@ namespace ConsoleApplication1
 {
     class IRCServer
     {
-        private string IP;
-        private string nick, pass,altnick,realname, lastnick;
-        private int PORT;
+        public string IP
+        {
+            get; private set;
+        }
+        public int PORT
+        {
+            get; private set;
+        }
+        private string nick, altnick,realname, lastnick;
+        public string Pass
+        {
+            get; private set;
+        }
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
         private bool ssl;
@@ -25,14 +35,14 @@ namespace ConsoleApplication1
             this.channels = channels;
         }
 
-        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool ssl, string nick, string pass, string altnick, string realname)
+        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool ssl, string nick, string Pass, string altnick, string realname)
         {
             this.IP = IP;
             this.PORT = PORT;
             this.channels = channels;
             this.ssl = ssl;
             this.nick = nick;
-            this.pass = pass;
+            this.Pass = Pass;
             this.altnick = altnick;
             this.realname = realname;
 
@@ -62,11 +72,7 @@ namespace ConsoleApplication1
             worker.Flush();
         }
 
-        public string getIp()
-        {
-            return this.IP;
-        }
-
+       
         public IRCChannel GetChannel(string name)
         {
             foreach(IRCChannel chan in channels)
@@ -80,9 +86,18 @@ namespace ConsoleApplication1
             return null;
         }
 
-        public int getPort()
+        public void PartChannel(string chan, string msg)
         {
-            return PORT;
+            channels.Remove(GetChannel(chan));
+            Write("PART " + chan + " :" + msg);
+            Flush();
+        }
+
+        public void JoinChannel(string chan)
+        {
+            Write("JOIN " + chan);
+            Flush();
+            channels.Add(new IRCChannel(chan, true));
         }
 
         public List<IRCChannel> GetChannels()
@@ -121,7 +136,7 @@ namespace ConsoleApplication1
             worker.Stop();
             Program.GetInstance().OnDispose(this);
         }
-
+        
         public void SetAttemptNickChange(bool attemptingNick)
         {
             this.attemptingNick = attemptingNick;
@@ -152,20 +167,25 @@ namespace ConsoleApplication1
     class IRCChannel
     {
         private string channel;
-        private bool reconnect;
+        public bool Reconnect
+        {
+            get; set;
+        }
 
        
         
 
-        public IRCChannel(string channel, bool reconnect)
+        public IRCChannel(string channel, bool Reconnect)
         {
             this.channel = channel;
-            this.reconnect = reconnect;
+            this.Reconnect = Reconnect;
         }
 
         public string GetName()
         {
             return channel;
         }
+
+        
     }
 }

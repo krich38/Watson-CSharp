@@ -8,10 +8,7 @@ namespace ConsoleApplication1
 {
     class Say : CommandActor
     {
-        public UserAccess GetRequiredAccess()
-        {
-            return UserAccess.FULL_USER;
-        }
+
 
         public void HandleCommand(IRCServer server, string command, IncomingMessage message)
         {
@@ -28,6 +25,9 @@ namespace ConsoleApplication1
                 
                 server.SendMessage(target, msg);
             }
+        }        public UserAccess GetRequiredAccess()
+        {
+            return UserAccess.HALF_USER;
         }
     }
 }

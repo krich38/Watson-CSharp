@@ -27,38 +27,36 @@ namespace ConsoleApplication1.Commands.Actors
                 //message.sendChatf(getHelp());
                 return;
             }
-            
+
 
             if (COMMAND_REGEX.IsMatch(message.GetMessage()))
             {
-                
-                   Match m = COMMAND_REGEX.Match(message.GetMessage());
+
+                Match m = COMMAND_REGEX.Match(message.GetMessage());
                 string cmd = m.Groups[1].Value;
-                
-                Console.WriteLine("SHIET: " +cmd);
+
                 if (cmd.Equals("about"))
                 {
                     if (m.Groups[2].Value == null || m.Groups[2].Value.Equals(""))
                     {
                         //message.sendChat("Need context");
                     }
-                    else if (CommandManager.RANDOM.Next() * 100 <= REPLY_NICK)
-                    {
-                        Console.WriteLine("lal");
-                        String markov = MarkovDatabaseAdapter.MarkovFind(m.Groups[2].Value, m.Groups[3].Value);
-                        if (markov == null)
-                        {
-                            message.SendChat("I can't :(");
-                        }
-                        else
-                        {
-                            message.SendChat(markov);
 
-                        }
+
+                    String markov = MarkovDatabaseAdapter.MarkovFind(m.Groups[2].Value, m.Groups[3].Value);
+                    if (markov == null)
+                    {
+                        message.SendChat("I can't :(");
                     }
+                    else
+                    {
+                        message.SendChat(markov);
+
+                    }
+
                 }
-                
-                }
+
             }
+        }
     }
 }

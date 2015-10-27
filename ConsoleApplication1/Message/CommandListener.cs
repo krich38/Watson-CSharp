@@ -44,14 +44,25 @@ namespace ConsoleApplication1
                     if (commands.HasCommand(command))
                     {
                         CommandActor commandActor = commands.GetCommand(command);
+                        if (commandActor.GetRequiredAccess() != UserAccess.ANYONE)
+                        {
+                            string host = msg.GetSource().Split('@')[1];
+                            UserAccess userRights = Program.GetInstance().GetUserAccess(host);
 
-                        string host = msg.GetSource().Split('@')[1];
-                        return true;
+                            if (UserAccessAttr.HasRequiredAccess(userRights, commandActor.GetRequiredAccess()))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            return true;
+                        }
 
 
                     }
                 }
-                
+
             }
             return false;
         }

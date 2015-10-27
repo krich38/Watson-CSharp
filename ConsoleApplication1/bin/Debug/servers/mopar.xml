@@ -5,15 +5,22 @@
 		<altnick>Wattson</altnick>
 		<realname>Watson</realname>
 		<ssl>true</ssl>
-		<channels>	<channel>
+		<channels>	
+			<channel>
 				<name>#triumvirate</name>
 				<reconnect>true</reconnect>
 			</channel>		
 			<channel>
 				<name>#bottest</name>
-				<reconnect>true</reconnect>
+				<reconnect>false</reconnect>
 			</channel>
 			
 		</channels>
+		<users>
+			<user>
+				<host>users-elo.qon.aoch8u.IP</host>
+				<access>2</access>
+			</user>
+		</users>
 	</connection>
 </server>

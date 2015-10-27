@@ -8,10 +8,7 @@ namespace ConsoleApplication1.Commands.Actors
 {
     class Kill : CommandActor
     {
-        public UserAccess GetRequiredAccess()
-        {
-            return UserAccess.ANYONE;
-        }
+
 
         public void HandleCommand(IRCServer server, string command, IncomingMessage msg)
         {
@@ -26,6 +23,9 @@ namespace ConsoleApplication1.Commands.Actors
 
             server.Dispose();
 
+        }        public UserAccess GetRequiredAccess()
+        {
+            return UserAccess.FULL_USER;
         }
     }
 }

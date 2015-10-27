@@ -14,8 +14,6 @@ namespace ConsoleApplication1
 {
     class ConnectionWorker
     {
-        private string IP;
-        private int PORT;
         private TcpClient connection;
         private Stream stream;
         private StreamWriter writer;
@@ -23,6 +21,10 @@ namespace ConsoleApplication1
         private Program program;
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
+        private bool Working
+        {
+            get; set;
+        }
 
         public void Write(string text)
         {
@@ -47,10 +49,15 @@ namespace ConsoleApplication1
 
         public void Process()
         {
-            Console.WriteLine("PROCESS");
-            string line = null;
-            while ((line = reader.ReadLine()) != null)
+            while (Working)
             {
+
+                string line = reader.ReadLine();
+                if (line == null)
+                {
+                    server.Dispose();
+
+                }
                 if (REGEX.IsMatch(line))
                 {
                     Match match = REGEX.Match(line);
@@ -76,8 +83,6 @@ namespace ConsoleApplication1
 
         public ConnectionWorker(IRCServer server)
         {
-            this.IP = server.getIp();
-            this.PORT = server.getPort();
             this.server = server;
             this.program = Program.GetInstance();
             server.SetWorker(this);
@@ -87,31 +92,14 @@ namespace ConsoleApplication1
             LISTENERS.Add(new CommandListener());
             LISTENERS.Add(new MarkovListener());
             LISTENERS.Add(new ProtocolHandler());
+            LISTENERS.Add(new KickHandler());
 
-            this.connection = new TcpClient(IP, PORT);
+            this.connection = new TcpClient(server.IP, server.PORT);
             this.stream = connection.GetStream();
             if (server.IsSSL())
             {
-                RemoteCertificateValidationCallback certValidation;
-                if (_ValidateServerCertificate)
-                {
-                    certValidation = ServicePointManager.ServerCertificateValidationCallback;
-                    if (certValidation == null)
-                    {
-                        certValidation = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                        {
-                            if (sslPolicyErrors == SslPolicyErrors.None)
-                            {
-                                return true;
-                            }
-                            return false;
-                        };
-                    }
-                }
-                else
-                {
-                    certValidation = delegate { return true; };
-                }
+                RemoteCertificateValidationCallback certValidation = delegate { return true; };
+                
                 RemoteCertificateValidationCallback certValidationWithIrcAsSender = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
                     {
                         return certValidation(this, certificate, chain, sslPolicyErrors);
@@ -124,21 +112,17 @@ namespace ConsoleApplication1
                     }
                     return localCertificates[0];
                 };
-                SslStream sslStream = new SslStream(stream, false,
-                                                    certValidationWithIrcAsSender,
-                                                    selectionCallback);
+                SslStream sslStream = new SslStream(stream, false, certValidationWithIrcAsSender, selectionCallback);
 
                 if (_SslClientCertificate != null)
                 {
                     var certs = new X509Certificate2Collection();
                     certs.Add(_SslClientCertificate);
-                    sslStream.AuthenticateAsClient(IP, certs,
-                                                   SslProtocols.Default,
-                                                   false);
+                    sslStream.AuthenticateAsClient(server.IP, certs, SslProtocols.Default, false);
                 }
                 else
                 {
-                    sslStream.AuthenticateAsClient(IP);
+                    sslStream.AuthenticateAsClient(server.IP);
                 }
 
                 stream = sslStream;
@@ -149,14 +133,14 @@ namespace ConsoleApplication1
 
             while (!stream.CanWrite) ;
             this.writer.Write("NICK " + server.GetNick() + "\r\n");
-            this.writer.Write("USER " + server.GetRealName() + " 0 * :bigfat\r\n");
+            this.writer.Write("USER " + server.GetRealName() + " 0 * :" + server.GetRealName() + "\r\n");
             this.writer.Flush();
+            Working = true;
 
         }
 
 
 
-        private bool _ValidateServerCertificate;
         public X509Certificate SslClientCertificate
         {
             get
