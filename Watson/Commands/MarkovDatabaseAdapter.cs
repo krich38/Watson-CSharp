@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Text;
 
 namespace Watson.Commands
@@ -223,7 +222,6 @@ namespace Watson.Commands
             cmd.Parameters.AddWithValue("@s3", seed3);
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
-
         }
     }
 }

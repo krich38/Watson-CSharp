@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace Watson.Message.Handler
 {
@@ -13,7 +8,6 @@ namespace Watson.Message.Handler
         {
             IRCServer server = msg.GetServer();
             string target = msg.GetTarget();
-
 
             if (server.GetChannel(target).Reconnect)
             {

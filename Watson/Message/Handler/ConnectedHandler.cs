@@ -9,14 +9,12 @@
             {
                 foreach (IRCChannel chan in server.GetChannels())
                 {
-                    server.Write("JOIN " + chan.GetName());
+                    server.Write("JOIN " + chan.Channel);
                 }
 
                 server.Write("PRIVMSG NICKSERV :IDENTIFY " + server.Pass);
                 server.Flush();
                 server.Connected = true;
-
-
             }
             else if (msg.GetRaw().Contains("No more connections allowed from your host via this connect class"))
             {

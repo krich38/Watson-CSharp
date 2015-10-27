@@ -1,9 +1,6 @@
 ﻿using Watson.Commands.Actors;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Watson
 {
@@ -12,6 +9,7 @@ namespace Watson
         private Dictionary<string, CommandActor> COMMANDS = new Dictionary<string, CommandActor>();
         public static Random RANDOM = new Random();
         private static CommandManager INSTANCE;
+
         public CommandManager()
         {
             COMMANDS.Add("say", new Say());

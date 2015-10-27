@@ -13,14 +13,24 @@ namespace Watson
         {
             get; private set;
         }
-
+        private string _Nick;
         public string Nick
         {
-            get; set;
+            get { return _Nick; }
+            set
+            {
+                if(Connected)
+                {
+                    _Nick = value;
+                    SetAttemptNickChange(true);
+                    Write("NICK " + _Nick);
+                    Flush();
+                }
+            }
         }
         public string AltNick
         {
-            get; set;
+            get; private set;
         }
 
         public string RealName
@@ -30,7 +40,7 @@ namespace Watson
 
         public string LastNick
         {
-            get; set;
+            get; private set;
         }
         public string Pass
         {
@@ -97,7 +107,7 @@ namespace Watson
         {
             foreach (IRCChannel chan in channels)
             {
-                if (chan.GetName().Equals(name))
+                if (chan.Channel.Equals(name))
                 {
                     return chan;
                 }
@@ -162,26 +172,18 @@ namespace Watson
 
     class IRCChannel
     {
-        private string channel;
+        public string Channel {
+            get; private set;
+        }
         public bool Reconnect
         {
             get; set;
         }
 
-
-
-
-        public IRCChannel(string channel, bool Reconnect)
+        public IRCChannel(string Channel, bool Reconnect)
         {
-            this.channel = channel;
+            this.Channel = Channel;
             this.Reconnect = Reconnect;
         }
-
-        public string GetName()
-        {
-            return channel;
-        }
-
-
     }
 }

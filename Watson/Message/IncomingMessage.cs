@@ -1,16 +1,11 @@
 ﻿namespace Watson
 {
     class IncomingMessage
-
     {
         private string raw;
-
         private string source;
-
         private string command;
-
         private string target;
-
         private string message;
         private string targetParams;
         private IRCServer server;

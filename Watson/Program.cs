@@ -16,19 +16,15 @@ namespace Watson
 
         static void Main(string[] args)
         {
-
             Program program = new Program();
             if (program.Load())
             {
                 INSTANCE = program;
-
-
                 program.ConnectAll();
             }
-
         }
 
-        public bool Load()
+        private bool Load()
         {
             string[] files = Directory.GetFiles("servers/");
             toConnect = new List<IRCServer>(files.Length);
@@ -54,7 +50,6 @@ namespace Watson
                 {
                     string channel = dd.Element("name").Value;
                     bool reconnect = bool.Parse(dd.Element("reconnect").Value);
-                    Console.WriteLine(channel + " : " + reconnect);
                     IRCChannel chan = new IRCChannel(channel, reconnect);
                     channels.Add(chan);
                 }
@@ -66,14 +61,9 @@ namespace Watson
                     string access = user.Element("access").Value;
                     UserAccess ua = UserAccessAttr.GetByAccess(int.Parse(access));
                     this.users.Add(host, ua);
-
                 }
-
-
                 IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
                 toConnect.Add(server);
-
-
             }
             Console.WriteLine("Loaded " + toConnect.Count + " servers");
             return Database.EstablishConnection();
@@ -107,9 +97,7 @@ namespace Watson
 
         public static Program GetInstance()
         {
-
             return INSTANCE;
-
         }
 
         public void OnDispose(IRCServer server)

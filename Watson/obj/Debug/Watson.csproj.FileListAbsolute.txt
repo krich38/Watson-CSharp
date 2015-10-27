@@ -13,17 +13,5 @@ C:\Users\Kyle\documents\visual studio 2015\Projects\ConsoleApplication1\ConsoleA
 C:\Users\Kyle\documents\visual studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\Watson.csprojResolveAssemblyReference.cache
 C:\Users\Kyle\documents\visual studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
 C:\Users\Kyle\documents\visual studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.dll
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\NCalc.dll
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\System.Data.SQLite.dll
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\System.Data.SQLite.EF6.dll
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\System.Data.SQLite.Linq.dll
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.xml
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\System.Data.SQLite.xml
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\Watson.exe.config
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\Watson.exe
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\Watson.pdb
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\obj\Debug\Watson.exe
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\obj\Debug\Watson.pdb

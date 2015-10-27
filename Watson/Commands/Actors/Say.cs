@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Watson
+﻿namespace Watson
 {
     class Say : CommandActor
     {
-
-
         public void HandleCommand(IRCServer server, string command, IncomingMessage message)
         {
             if (message.HasMessage())
@@ -25,7 +17,9 @@ namespace Watson
                 
                 server.SendMessage(target, msg);
             }
-        }        public UserAccess GetRequiredAccess()
+        }
+
+        public UserAccess GetRequiredAccess()
         {
             return UserAccess.HALF_USER;
         }

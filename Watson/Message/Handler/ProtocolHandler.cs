@@ -56,14 +56,9 @@ namespace Watson.Message.Handler
                                 nick = server.AltNick;
                             }
                             server.Nick = nick; 
-                            server.Write("NICK " + nick);
-                            server.Flush();
                            
                         }
                         break;
-
-
-
                 }
             }
         }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Watson
 {
@@ -35,10 +31,9 @@ namespace Watson
         {
             SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
             command.ExecuteNonQuery();
-
         }
 
-        public static SQLiteDataReader ExecuteQuery(String sql)
+        public static SQLiteDataReader ExecuteQuery(string sql)
         {
             SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
             return command.ExecuteReader();

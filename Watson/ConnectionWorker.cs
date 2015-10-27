@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
-using System.Net;
 using System.Security.Authentication;
 using Watson.Message;
 using Watson.Message.Handler;
@@ -21,6 +20,20 @@ namespace Watson
         private Program program;
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
+        private List<MessageListener> LISTENERS = new List<MessageListener>();
+        private IRCServer server;
+        private X509Certificate _SslClientCertificate;
+        public X509Certificate SslClientCertificate
+        {
+            get
+            {
+                return _SslClientCertificate;
+            }
+            set
+            {
+                _SslClientCertificate = value;
+            }
+        }
         private bool Working
         {
             get; set;
@@ -43,20 +56,15 @@ namespace Watson
             writer.Flush();
         }
 
-        private List<MessageListener> LISTENERS = new List<MessageListener>();
-        private IRCServer server;
-        private X509Certificate _SslClientCertificate;
 
         public void Process()
         {
             while (Working)
             {
-
                 string line = reader.ReadLine();
                 if (line == null)
                 {
                     server.Dispose();
-
                 }
                 if (REGEX.IsMatch(line))
                 {
@@ -76,11 +84,14 @@ namespace Watson
                 {
                     Console.Write("UNMATCHED\n");
                 }
-
-
             }
         }
 
+        public void Stop()
+        {
+            stream.Dispose();
+            connection.Close();
+        }
         public ConnectionWorker(IRCServer server)
         {
             this.server = server;
@@ -99,7 +110,7 @@ namespace Watson
             if (server.SSL)
             {
                 RemoteCertificateValidationCallback certValidation = delegate { return true; };
-                
+
                 RemoteCertificateValidationCallback certValidationWithIrcAsSender = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
                     {
                         return certValidation(this, certificate, chain, sslPolicyErrors);
@@ -136,27 +147,9 @@ namespace Watson
             this.writer.Write("USER " + server.RealName + " 0 * :" + server.RealName + "\r\n");
             this.writer.Flush();
             Working = true;
-
         }
 
 
 
-        public X509Certificate SslClientCertificate
-        {
-            get
-            {
-                return _SslClientCertificate;
-            }
-            set
-            {
-                _SslClientCertificate = value;
-            }
-        }
-
-        public void Stop()
-        {
-            stream.Dispose();
-            connection.Close();
-        }
     }
 }

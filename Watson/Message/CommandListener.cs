@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 namespace Watson
 {
     class CommandListener : MessageListener
-    {
+    {private const string COMMAND_PATTERN = "(\\S+?)(?:[,:]? (.+))?";
+
         private CommandManager commands;
-
-        private const string COMMAND_PATTERN = "(\\S+?)(?:[,:]? (.+))?";
-
         public Regex COMMAND_REGEX = new Regex(COMMAND_PATTERN);
 
         public void Handle(IncomingMessage msg)
@@ -48,7 +46,6 @@ namespace Watson
                         {
                             string host = msg.GetSource().Split('@')[1];
                             UserAccess userRights = Program.GetInstance().GetUserAccess(host);
-
                             if (UserAccessAttr.HasRequiredAccess(userRights, commandActor.GetRequiredAccess()))
                             {
                                 return true;

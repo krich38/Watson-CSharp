@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Watson.Commands.Actors
 {
@@ -11,8 +7,7 @@ namespace Watson.Commands.Actors
         public static DateTime BEGIN = DateTime.Now;
         public UserAccess GetRequiredAccess()
         {
-            return UserAccess.
-                ANYONE;
+            return UserAccess.ANYONE;
         }
 
         public void HandleCommand(IRCServer server, string command, IncomingMessage msg)

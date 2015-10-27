@@ -1,16 +1,10 @@
 ﻿using Watson.Commands;
 using Watson.Commands.Actors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Watson.Message
 {
     class MarkovListener : MessageListener
     {
-
         public void Handle(IncomingMessage message)
         {
             if (message.IsDestChannel())
@@ -21,7 +15,7 @@ namespace Watson.Message
                     string markov = MarkovDatabaseAdapter.MarkovGenerate();
                     if (markov != null)
                     {
-                        // send markov here
+                        message.SendChat(markov);
                     }
                 }
             }
@@ -40,5 +34,4 @@ namespace Watson.Message
             }
         }
     }
-
 }
