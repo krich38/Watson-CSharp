@@ -21,6 +21,7 @@ namespace ConsoleApplication1
             COMMANDS.Add("uptime", new Uptime());
             COMMANDS.Add("part", new ChannelChange());
             COMMANDS.Add("join", new ChannelChange());
+            COMMANDS.Add("calculate", new Calculate());
 
         }
 

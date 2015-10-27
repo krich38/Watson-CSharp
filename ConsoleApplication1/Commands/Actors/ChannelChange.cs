@@ -48,12 +48,9 @@ namespace ConsoleApplication1.Commands.Actors
                         server.PartChannel(channel, partMessage);
                     }
                     else
-                    {
-                       
-                            
+                    {  
                         server.JoinChannel(msg.GetMessage());
-                        
-                    }
+                      }
                 }
                 else
                 {

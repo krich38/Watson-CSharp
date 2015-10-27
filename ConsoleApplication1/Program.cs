@@ -81,13 +81,13 @@ namespace ConsoleApplication1
 
         public UserAccess GetUserAccess(string host)
         {
-
             if (users.ContainsKey(host))
             {
                 return users[host];
             }
             return UserAccess.ANYONE;
         }
+
         private void ConnectAll()
         {
             connected = new List<IRCServer>();
