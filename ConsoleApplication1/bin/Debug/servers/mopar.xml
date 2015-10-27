@@ -5,9 +5,15 @@
 		<altnick>Wattson</altnick>
 		<realname>Watson</realname>
 		<ssl>true</ssl>
-		<channels>
-			<channel name="#triumvirate" reconnect="true"></channel>
-			<channel name="#bottest" reconnect="true"></channel>
+		<channels>	<channel>
+				<name>#triumvirate</name>
+				<reconnect>true</reconnect>
+			</channel>		
+			<channel>
+				<name>#bottest</name>
+				<reconnect>true</reconnect>
+			</channel>
+			
 		</channels>
 	</connection>
 </server>

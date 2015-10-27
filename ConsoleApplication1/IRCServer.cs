@@ -13,6 +13,11 @@ namespace ConsoleApplication1
         private bool ssl;
         private bool attemptingNick;
 
+        public bool Connected
+        {
+            get; set;
+        }
+
         public IRCServer(string IP, int PORT, List<IRCChannel> channels)
         {
             this.IP = IP;
@@ -32,7 +37,10 @@ namespace ConsoleApplication1
             this.realname = realname;
 
         }
-
+        public string GetAltNick()
+        {
+            return altnick;
+        }
         public void Write(string text)
         {
 
@@ -74,7 +82,7 @@ namespace ConsoleApplication1
 
         public int getPort()
         {
-            return this.PORT;
+            return PORT;
         }
 
         public List<IRCChannel> GetChannels()
@@ -107,6 +115,13 @@ namespace ConsoleApplication1
             this.nick = nick;
         }
 
+      public void Dispose()
+        {
+            // do all parts etc here
+            worker.Stop();
+            Program.GetInstance().OnDispose(this);
+        }
+
         public void SetAttemptNickChange(bool attemptingNick)
         {
             this.attemptingNick = attemptingNick;
@@ -126,60 +141,31 @@ namespace ConsoleApplication1
         {
             return attemptingNick;
         }
+
+        override
+        public string ToString()
+        {
+            return IP + ":" + PORT;
+        }
     }
 
     class IRCChannel
     {
         private string channel;
         private bool reconnect;
-        private Dictionary<string, int> users;
-            
-        public enum ChannelAccess
-        {
-            OPERATOR,
-            REGULAR_USER, ADMIN,OWNER,VOICE, HALF_OPERATOR
-        }
 
-        public static ChannelAccess GetChannelAccessByCode(char code)
-        {
-            
-            switch(code)
-            {
-                case '@':
-                    return ChannelAccess.OPERATOR;
-                case '&':
-                    return ChannelAccess.ADMIN;
-                case '~':
-                    return ChannelAccess.OWNER;
-                case '+':
-                    return ChannelAccess.VOICE;
-                case '%':
-                    return ChannelAccess.HALF_OPERATOR;
-            }
-            return ChannelAccess.REGULAR_USER;
-        }
+       
         
 
         public IRCChannel(string channel, bool reconnect)
         {
             this.channel = channel;
             this.reconnect = reconnect;
-            users = new Dictionary<string, int>();
         }
 
         public string GetName()
         {
             return channel;
-        }
-
-        public void UpdateUsers(string user, int access)
-        {
-            users[user] = access;
-        }
-
-        public Dictionary<string, int> GetUsers()
-        {
-            return users;
         }
     }
 }

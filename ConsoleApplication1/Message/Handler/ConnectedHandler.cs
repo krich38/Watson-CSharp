@@ -4,13 +4,15 @@
     {
         public void Handle(IncomingMessage msg)
         {
+            IRCServer server = msg.GetServer();
             if (msg.GetCommand().Equals("001"))
             {
-                foreach (IRCChannel chan in msg.GetServer().GetChannels())
+                foreach (IRCChannel chan in server.GetChannels())
                 {
-                    msg.GetServer().Write("JOIN " + chan.GetName());
+                    server.Write("JOIN " + chan.GetName());
                 }
-                msg.GetServer().Flush();
+                server.Flush();
+                server.Connected = true;
             }
             else if (msg.GetRaw().Contains("No more connections allowed from your host via this connect class"))
             {

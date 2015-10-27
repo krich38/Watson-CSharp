@@ -10,6 +10,7 @@ namespace ConsoleApplication1
     {
         private static volatile Program INSTANCE;
         private List<IRCServer> toConnect;
+        private List<IRCServer> connected;
 
         static void Main(string[] args)
         {
@@ -43,17 +44,25 @@ namespace ConsoleApplication1
                 string realname = el.Element("realname").Value;
                 bool ssl = bool.Parse(el.Element("ssl").Value);
                 List<IRCChannel> channels = new List<IRCChannel>();
-                foreach (XElement ch in el.Elements("channels"))
-                {
-                    XElement x = ch.Element("channel");
-                    string channel = x.Attribute("name").Value;
-                    bool reconnect = bool.Parse(x.Attribute("reconnect").Value);
-                    IRCChannel chan = new IRCChannel(channel, reconnect);
-                    channels.Add(chan);
+                Console.WriteLine();
+                try {
+                    XElement cc = el.Element("channels");
+                    foreach(XElement dd in cc.Elements())
+                    {
+                        string channel = dd.Element("name").Value;
+                        bool reconnect = bool.Parse(dd.Element("reconnect").Value);
+                        Console.WriteLine(channel + " : " + reconnect);
+                        IRCChannel chan = new IRCChannel(channel, reconnect);
+                        channels.Add(chan);
+                    }
+                    
 
+                    IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
+                    toConnect.Add(server);
+                } catch(Exception e)
+                {
+                    Console.WriteLine(e);
                 }
-                IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
-                toConnect.Add(server);
 
             }
             Console.WriteLine("Loaded " + toConnect.Count);
@@ -61,6 +70,7 @@ namespace ConsoleApplication1
         }
         private void ConnectAll()
         {
+            connected = new List<IRCServer>();
             foreach (IRCServer server in toConnect)
             {
                 ConnectionWorker worker = new ConnectionWorker(server);
@@ -82,5 +92,16 @@ namespace ConsoleApplication1
 
         }
 
+        public void OnDispose(IRCServer server)
+        {
+            connected.Remove(server);
+        }
+
+        public void OnConnected(IRCServer server)
+        {
+            connected.Add(server);
+            toConnect.Remove(server);
+            Console.WriteLine("Established connection to " + server.ToString());
+        }
     }
 }

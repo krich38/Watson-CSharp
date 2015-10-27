@@ -168,5 +168,11 @@ namespace ConsoleApplication1
                 _SslClientCertificate = value;
             }
         }
+
+        public void Stop()
+        {
+            stream.Dispose();
+            connection.Close();
+        }
     }
 }

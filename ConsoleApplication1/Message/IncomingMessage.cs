@@ -42,7 +42,10 @@
                 this.message = message.Trim();
             }
         }
-
+        public string GetTargetParams()
+        {
+            return targetParams;
+        }
         public string GetCommand()
         {
             return command;

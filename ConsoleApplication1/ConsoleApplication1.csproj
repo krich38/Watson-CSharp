@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Actors\ChangeNick.cs" />
+    <Compile Include="Commands\Actors\Kill.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
     <Compile Include="Database.cs" />
