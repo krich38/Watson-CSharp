@@ -56,7 +56,11 @@ namespace Watson
         }
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
-        private Dictionary<string, UserAccess> users;
+        public Dictionary<string, UserAccess> Users {
+            get;
+            private set;
+
+        }
 
         private bool attemptingNick;
 
@@ -69,7 +73,7 @@ namespace Watson
             this.channels = channels;
         }
 
-        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool SSL, string Nick, string Pass, string AltNick, string RealName, Dictionary<string, UserAccess> users)
+        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool SSL, string Nick, string Pass, string AltNick, string RealName, Dictionary<string, UserAccess> Users)
         {
             this.IP = IP;
             this.PORT = PORT;
@@ -79,7 +83,7 @@ namespace Watson
             this.Pass = Pass;
             this.AltNick = AltNick;
             this.RealName = RealName;
-            this.users = users;
+            this.Users = Users;
 
         }
 
@@ -119,9 +123,9 @@ namespace Watson
         }
         public UserAccess GetUserAccess(string host)
         {
-            if (users.ContainsKey(host))
+            if (Users.ContainsKey(host))
             {
-                return users[host];
+                return Users[host];
             }
             return UserAccess.ANYONE;
         }

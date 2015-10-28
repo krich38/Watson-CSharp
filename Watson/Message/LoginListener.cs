@@ -7,7 +7,6 @@ namespace Watson.Message
         public void Handle(IncomingMessage msg)
         {
             string[] parts = msg.Message.Split(' ');
-            Console.WriteLine(msg.Message);
             if (parts.Length == 4)
             {
                 string text = msg.Message.Substring(msg.Message.IndexOf(parts[1]));
@@ -17,12 +16,10 @@ namespace Watson.Message
                 UserAccess found = Database.AuthenticateUser(user, pass);
                 if (found != UserAccess.ANYONE)
                 {
-                    //msg.Server.getUserProperties().getUsers().put(msg.getHostName(), found);
-                    //Watson.getInstance().save();
+                    //save here
+                    msg.Server.Users[msg.Host] = found;
                     msg.SendChat("Thank you for authenticating, you have been granted " + found + " access.");
-
                 }
-
             }
             else
             {
