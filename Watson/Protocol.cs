@@ -17,7 +17,8 @@ namespace Watson
             new MarkovListener(),
             new ProtocolHandler(),
             new KickHandler(),
-            new LoginListener()
+            new LoginListener(),
+            new UserSeenListener()
         });
 
 

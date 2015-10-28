@@ -79,6 +79,7 @@
     <Compile Include="Commands\Actors\ChannelChange.cs" />
     <Compile Include="Commands\Actors\Kill.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
+    <Compile Include="Commands\Actors\Seen.cs" />
     <Compile Include="Commands\Actors\Uptime.cs" />
     <Compile Include="Commands\Actors\Weather.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
@@ -102,7 +103,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol.cs" />
-    <Compile Include="test\TestWeather.cs" />
     <Compile Include="UserAccess.cs" />
   </ItemGroup>
   <ItemGroup>

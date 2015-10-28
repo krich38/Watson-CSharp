@@ -21,6 +21,7 @@ namespace Watson
             COMMANDS.Add("join", new ChannelChange());
             COMMANDS.Add("calculate", new Calculate());
             COMMANDS.Add("weather", new Weather());
+            COMMANDS.Add("seen", new Seen());
 
         }
 

@@ -48,7 +48,7 @@ namespace Watson
             this.Raw = Raw;
             this.Source = Source;
             this.Command = Command;
-            if (Command.Equals("PRIVMSG") || Command.Equals("NICK") && Server.Connected)
+            if (Command.Equals("PRIVMSG") || Command.Equals("NICK") || Command.Equals("JOIN") || Command.Equals("PART") || Command.Equals("QUIT") && Server.Connected)
             {
                 Sender = Source.Substring(0, Source.IndexOf("!"));
                 Host = Source.Substring(Source.IndexOf("@") + 1);
