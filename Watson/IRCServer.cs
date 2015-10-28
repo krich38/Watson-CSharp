@@ -18,14 +18,15 @@ namespace Watson
         {
             get { return _Nick; }
             set
-            {_Nick = value;
-                if(Connected)
+            {
+                _Nick = value;
+                if (Connected)
                 {
-                    
+
                     SetAttemptNickChange(true);
                     Write("NICK " + _Nick);
                     Flush();
-                } 
+                }
             }
         }
         public string AltNick
@@ -61,7 +62,8 @@ namespace Watson
         }
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
-        public Dictionary<string, UserAccess> Users {
+        public Dictionary<string, UserAccess> Users
+        {
             get;
             private set;
 
@@ -162,7 +164,7 @@ namespace Watson
             this.worker = worker;
         }
 
-      
+
         public void Dispose()
         {
             // do all parts etc here
@@ -194,7 +196,8 @@ namespace Watson
 
     class IRCChannel
     {
-        public string Channel {
+        public string Channel
+        {
             get; private set;
         }
         public bool Reconnect

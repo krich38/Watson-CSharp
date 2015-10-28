@@ -30,12 +30,12 @@ namespace Watson
             {
                 this.toConnect = toConnect;
                 return Database.EstablishConnection();
-            } 
-                return false;
-            
+            }
+            return false;
+
         }
 
- 
+
 
         private void ConnectAll()
         {

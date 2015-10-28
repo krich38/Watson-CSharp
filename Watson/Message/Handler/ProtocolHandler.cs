@@ -22,7 +22,8 @@ namespace Watson.Message.Handler
                 {
                     // update user nick list
                 }
-            } else if(msg.Command.Equals("ERROR"))
+            }
+            else if (msg.Command.Equals("ERROR"))
             {
                 server.Dispose();
             }
@@ -48,15 +49,16 @@ namespace Watson.Message.Handler
                         else
                         {
                             string nick;
-                            if(server.Nick.Equals(server.AltNick))
+                            if (server.Nick.Equals(server.AltNick))
                             {
                                 nick = server.AltNick + 1;
-                            } else
+                            }
+                            else
                             {
                                 nick = server.AltNick;
                             }
-                            server.Nick = nick; 
-                           
+                            server.Nick = nick;
+
                         }
                         break;
                 }
@@ -65,7 +67,7 @@ namespace Watson.Message.Handler
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-            
+
             return msg.Command.Equals("433") || msg.Command.Equals("353") || msg.Command.Equals("NICK") || msg.Command.Equals("ERROR");
         }
     }

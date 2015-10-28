@@ -29,7 +29,7 @@ namespace Watson
                     string pass = el.Element("pass").Value;
                     string altnick = el.Element("altnick").Value;
                     string realname = el.Element("realname").Value;
-                    bool loggingRaw = bool.Parse( el.Element("lograw").Value);
+                    bool loggingRaw = bool.Parse(el.Element("lograw").Value);
                     bool ssl = bool.Parse(el.Element("ssl").Value);
                     List<IRCChannel> channels = new List<IRCChannel>();
 

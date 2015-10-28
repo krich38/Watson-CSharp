@@ -21,7 +21,7 @@ namespace Watson
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
         private IRCServer server;
-        
+
         private bool Working
         {
             get; set;
@@ -66,8 +66,8 @@ namespace Watson
                             ml.Handle(msg);
                         }
                     }
-                    
-                    if(server.LoggingRaw)
+
+                    if (server.LoggingRaw)
                     {
                         Console.WriteLine(line);
                     }
@@ -96,7 +96,7 @@ namespace Watson
             stream = connection.GetStream();
             if (server.SSL)
             {
-                
+
                 stream = Protocol.Secure(server, stream);
             }
             this.reader = new StreamReader(stream);

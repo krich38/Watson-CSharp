@@ -29,7 +29,7 @@ namespace Watson.Message
         public MarkovListener()
         {
 
-            if(!MarkovDatabaseAdapter.Setup())
+            if (!MarkovDatabaseAdapter.Setup())
             {
                 // oh no
             }

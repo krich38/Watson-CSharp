@@ -14,7 +14,7 @@
                     target = parts[0].Replace("{", "").Replace("}", "");
                     msg = parts[1];
                 }
-                
+
                 server.SendMessage(target, msg);
             }
         }

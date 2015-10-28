@@ -3,7 +3,8 @@
 namespace Watson
 {
     class CommandListener : MessageListener
-    {private const string COMMAND_PATTERN = "(\\S+?)(?:[,:]? (.+))?";
+    {
+        private const string COMMAND_PATTERN = "(\\S+?)(?:[,:]? (.+))?";
 
         private CommandManager commands;
         public Regex COMMAND_REGEX = new Regex(COMMAND_PATTERN);

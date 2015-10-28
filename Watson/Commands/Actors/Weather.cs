@@ -40,7 +40,7 @@ namespace Watson.Commands.Actors
                 long lastquery = -1;
                 try
                 {
-                    lastquery = long.Parse(Database.GetKeyValue(msg.Server, "weather.lastquery." + location));                    
+                    lastquery = long.Parse(Database.GetKeyValue(msg.Server, "weather.lastquery." + location));
                 }
                 catch (Exception e)
                 {
@@ -119,7 +119,7 @@ namespace Watson.Commands.Actors
             Timer t = new Timer((obj) =>
             {
                 Database.ExecuteUpdate("delete from keyvalues where key like (select 'weather.%.' || substr(key, 19) from keyvalues where key like 'weather.lastquery.%' and value < " + (Environment.TickCount - TIMEOUT) + ")");
-            }, null, TIMEOUT * 2, Timeout.Infinite);            
+            }, null, TIMEOUT * 2, Timeout.Infinite);
         }
     }
 }

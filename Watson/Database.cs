@@ -84,12 +84,12 @@ namespace Watson
 
         public static void SetKeyValue(IRCServer server, string key, object value)
         {
-                SQLiteCommand cmd = new SQLiteCommand("insert into keyvalues (server, key, value) values (@server, @key, @value)", GetConnection());
-                cmd.Parameters.AddWithValue("@server", server.IP);
-                cmd.Parameters.AddWithValue("@key", key);
-                cmd.Parameters.AddWithValue("@value", value.ToString());
-                cmd.ExecuteNonQuery();
-           
+            SQLiteCommand cmd = new SQLiteCommand("insert into keyvalues (server, key, value) values (@server, @key, @value)", GetConnection());
+            cmd.Parameters.AddWithValue("@server", server.IP);
+            cmd.Parameters.AddWithValue("@key", key);
+            cmd.Parameters.AddWithValue("@value", value.ToString());
+            cmd.ExecuteNonQuery();
+
         }
     }
 }
