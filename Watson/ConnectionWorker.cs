@@ -21,18 +21,7 @@ namespace Watson
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
         private IRCServer server;
-        private X509Certificate _SslClientCertificate;
-        public X509Certificate SslClientCertificate
-        {
-            get
-            {
-                return _SslClientCertificate;
-            }
-            set
-            {
-                _SslClientCertificate = value;
-            }
-        }
+        
         private bool Working
         {
             get; set;
@@ -70,7 +59,7 @@ namespace Watson
                     Match match = REGEX.Match(line);
                     IncomingMessage msg = new IncomingMessage(server, line, match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[4].Value);
 
-                    foreach (MessageListener ml in program.LISTENERS)
+                    foreach (MessageListener ml in Protocol.LISTENERS)
                     {
                         if (ml.ShouldHandle(msg))
                         {
@@ -103,34 +92,8 @@ namespace Watson
             stream = connection.GetStream();
             if (server.SSL)
             {
-                RemoteCertificateValidationCallback certValidation = delegate { return true; };
-
-                RemoteCertificateValidationCallback certValidationWithIrcAsSender = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                    {
-                        return certValidation(this, certificate, chain, sslPolicyErrors);
-                    };
-                LocalCertificateSelectionCallback selectionCallback = delegate (object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
-                {
-                    if (localCertificates == null || localCertificates.Count == 0)
-                    {
-                        return null;
-                    }
-                    return localCertificates[0];
-                };
-                SslStream sslStream = new SslStream(stream, false, certValidationWithIrcAsSender, selectionCallback);
-
-                if (_SslClientCertificate != null)
-                {
-                    var certs = new X509Certificate2Collection();
-                    certs.Add(_SslClientCertificate);
-                    sslStream.AuthenticateAsClient(server.IP, certs, SslProtocols.Default, false);
-                }
-                else
-                {
-                    sslStream.AuthenticateAsClient(server.IP);
-                }
-
-                stream = sslStream;
+                
+                stream = Protocol.Secure(server, stream);
             }
             this.reader = new StreamReader(stream);
             this.writer = new StreamWriter(stream);

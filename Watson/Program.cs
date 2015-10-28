@@ -3,8 +3,6 @@ using System.Threading;
 using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
-using Watson.Message;
-using Watson.Message.Handler;
 
 namespace Watson
 {
@@ -14,12 +12,6 @@ namespace Watson
 
         private List<IRCServer> toConnect;
         private List<IRCServer> connected;
-        private Dictionary<string, UserAccess> users;
-        public List<MessageListener> LISTENERS
-        {
-            get;
-            private set;
-        }
 
         static void Main(string[] args)
         {
@@ -35,7 +27,6 @@ namespace Watson
         {
             string[] files = Directory.GetFiles("servers/");
             toConnect = new List<IRCServer>(files.Length);
-            users = new Dictionary<string, UserAccess>();
             foreach (string file in files)
             {
                 XDocument xd = XDocument.Load(file);
@@ -81,14 +72,7 @@ namespace Watson
         private void ConnectAll()
         {
             connected = new List<IRCServer>();
-            LISTENERS = new List<MessageListener>();
-            LISTENERS.Add(new ConnectedHandler());
-            LISTENERS.Add(new PingHandler());
-            LISTENERS.Add(new CommandListener());
-            LISTENERS.Add(new MarkovListener());
-            LISTENERS.Add(new ProtocolHandler());
-            LISTENERS.Add(new KickHandler());
-            LISTENERS.Add(new LoginListener());
+
             foreach (IRCServer server in toConnect)
             {
                 ConnectionWorker worker = new ConnectionWorker(server);
