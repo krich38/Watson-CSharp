@@ -6,9 +6,9 @@
         {
             if (message.HasMessage())
             {
-                string msg = message.GetMessage();
-                string target = message.GetTarget();
-                string[] parts = message.GetMessage().Split(new char[] { ' ' }, 2);
+                string msg = message.Message;
+                string target = message.Target;
+                string[] parts = message.Message.Split(new char[] { ' ' }, 2);
                 if (parts[0].StartsWith("{") && parts[0].EndsWith("}") && parts.Length > 1)
                 {
                     target = parts[0].Replace("{", "").Replace("}", "");

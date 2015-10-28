@@ -6,13 +6,13 @@ namespace Watson.Message.Handler
     {
         public void Handle(IncomingMessage msg)
         {
-            IRCServer server = msg.GetServer();
+            IRCServer server = msg.Server;
             string ourNick = server.Nick;
 
-            if (msg.GetCommand().Equals("NICK"))
+            if (msg.Command.Equals("NICK"))
             {
-                string whoChanging = msg.GetNick();
-                string changingTo = msg.GetTarget();
+                string whoChanging = msg.Sender;
+                string changingTo = msg.Target;
                 if (whoChanging.Equals(ourNick))
                 {
                     server.Nick = changingTo;
@@ -22,14 +22,14 @@ namespace Watson.Message.Handler
                 {
                     // update user nick list
                 }
-            } else if(msg.GetCommand().Equals("ERROR"))
+            } else if(msg.Command.Equals("ERROR"))
             {
                 server.Dispose();
             }
             else
             {
-                string raw = msg.GetRaw();
-                switch (msg.GetCommand())
+                string raw = msg.Raw;
+                switch (msg.Command)
                 {
                     // nick change
                     case "433":
@@ -66,7 +66,7 @@ namespace Watson.Message.Handler
         public bool ShouldHandle(IncomingMessage msg)
         {
             
-            return msg.GetCommand().Equals("433") || msg.GetCommand().Equals("353") || msg.GetCommand().Equals("NICK") || msg.GetCommand().Equals("ERROR");
+            return msg.Command.Equals("433") || msg.Command.Equals("353") || msg.Command.Equals("NICK") || msg.Command.Equals("ERROR");
         }
     }
 }

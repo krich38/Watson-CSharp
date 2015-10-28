@@ -6,18 +6,18 @@
         {
             if (msg.HasMessage())
             {
-                string channel = msg.GetMessage();
+                string channel = msg.Message;
                 string partMessage = "Bye!";
                 if (command.Equals("part"))
                 {
                     string[] parts;
-                    if (msg.GetMessage().Contains(" "))
+                    if (msg.Message.Contains(" "))
                     {
-                        parts = msg.GetMessage().Split(new char[] { ' ' }, 2);
+                        parts = msg.Message.Split(new char[] { ' ' }, 2);
                     }
                     else
                     {
-                        parts = new string[] { msg.GetMessage() };
+                        parts = new string[] { msg.Message };
                     }
 
                     if (parts.Length > 1)
@@ -29,7 +29,7 @@
                         }
                         else
                         {
-                            partMessage = msg.GetMessage();
+                            partMessage = msg.Message;
                         }
 
                     }
@@ -37,7 +37,7 @@
                 }
                 else
                 {
-                    server.JoinChannel(msg.GetMessage());
+                    server.JoinChannel(msg.Message);
                 }
             }
             else

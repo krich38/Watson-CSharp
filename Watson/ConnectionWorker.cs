@@ -20,7 +20,6 @@ namespace Watson
         private Program program;
         public const string IRC_PATTERN = "^(?:[:](\\S+) )?(\\S+)(?: (?!:)(.+?))?(?: [:](.*))?$";
         public Regex REGEX = new Regex(IRC_PATTERN);
-        private List<MessageListener> LISTENERS = new List<MessageListener>();
         private IRCServer server;
         private X509Certificate _SslClientCertificate;
         public X509Certificate SslClientCertificate
@@ -71,14 +70,14 @@ namespace Watson
                     Match match = REGEX.Match(line);
                     IncomingMessage msg = new IncomingMessage(server, line, match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value, match.Groups[4].Value);
 
-                    foreach (MessageListener ml in LISTENERS)
+                    foreach (MessageListener ml in program.LISTENERS)
                     {
                         if (ml.ShouldHandle(msg))
                         {
                             ml.Handle(msg);
                         }
                     }
-                    Console.Write(msg.GetRaw() + "\n");
+                    Console.Write(msg.Raw + "\n");
                 }
                 else
                 {
@@ -89,25 +88,19 @@ namespace Watson
 
         public void Stop()
         {
+            Working = false;
             stream.Dispose();
             connection.Close();
         }
+
         public ConnectionWorker(IRCServer server)
         {
             this.server = server;
-            this.program = Program.GetInstance();
+            program = Program.GetInstance();
             server.SetWorker(this);
 
-            LISTENERS.Add(new ConnectedHandler());
-            LISTENERS.Add(new PingHandler());
-            LISTENERS.Add(new CommandListener());
-            LISTENERS.Add(new MarkovListener());
-            LISTENERS.Add(new ProtocolHandler());
-            LISTENERS.Add(new KickHandler());
-            LISTENERS.Add(new LoginListener());
-
-            this.connection = new TcpClient(server.IP, server.PORT);
-            this.stream = connection.GetStream();
+            connection = new TcpClient(server.IP, server.PORT);
+            stream = connection.GetStream();
             if (server.SSL)
             {
                 RemoteCertificateValidationCallback certValidation = delegate { return true; };

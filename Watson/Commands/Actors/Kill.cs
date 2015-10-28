@@ -6,7 +6,7 @@
         {
             if (msg.HasMessage())
             {
-                server.Write("QUIT :" + msg.GetMessage());
+                server.Write("QUIT :" + msg.Message);
             }
             else
             {

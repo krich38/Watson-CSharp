@@ -3,6 +3,8 @@ using System.Threading;
 using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
+using Watson.Message;
+using Watson.Message.Handler;
 
 namespace Watson
 {
@@ -13,6 +15,11 @@ namespace Watson
         private List<IRCServer> toConnect;
         private List<IRCServer> connected;
         private Dictionary<string, UserAccess> users;
+        public List<MessageListener> LISTENERS
+        {
+            get;
+            private set;
+        }
 
         static void Main(string[] args)
         {
@@ -55,33 +62,33 @@ namespace Watson
                 }
 
                 XElement users = el.Element("users");
+                Dictionary<string, UserAccess> serverUsers = new Dictionary<string, UserAccess>();
                 foreach (XElement user in users.Elements())
                 {
                     string host = user.Element("host").Value;
                     string access = user.Element("access").Value;
                     UserAccess ua = UserAccessAttr.GetByAccess(int.Parse(access));
-                    this.users.Add(host, ua);
+                    serverUsers.Add(host, ua);
                 }
-                Console.WriteLine("LALALALALA: " + nick);
-                IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
+                IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname, serverUsers);
                 toConnect.Add(server);
             }
             Console.WriteLine("Loaded " + toConnect.Count + " servers");
             return Database.EstablishConnection();
         }
 
-        public UserAccess GetUserAccess(string host)
-        {
-            if (users.ContainsKey(host))
-            {
-                return users[host];
-            }
-            return UserAccess.ANYONE;
-        }
-
+        
         private void ConnectAll()
         {
             connected = new List<IRCServer>();
+            LISTENERS = new List<MessageListener>();
+            LISTENERS.Add(new ConnectedHandler());
+            LISTENERS.Add(new PingHandler());
+            LISTENERS.Add(new CommandListener());
+            LISTENERS.Add(new MarkovListener());
+            LISTENERS.Add(new ProtocolHandler());
+            LISTENERS.Add(new KickHandler());
+            LISTENERS.Add(new LoginListener());
             foreach (IRCServer server in toConnect)
             {
                 ConnectionWorker worker = new ConnectionWorker(server);

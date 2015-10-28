@@ -1,99 +1,109 @@
-﻿namespace Watson
+﻿using System;
+
+namespace Watson
 {
     class IncomingMessage
     {
-        private string raw;
-        private string source;
-        private string command;
-        private string target;
-        private string message;
-        private string targetParams;
-        private IRCServer server;
-
-        public IncomingMessage(IRCServer server, string raw, string source, string command, string target, string message)
+        public string Raw
         {
-            //Console.Write("CMD: " + command + ", target: " + target + ", MSG: " + message + ", source: " + source + "\n");
-            this.server = server;
-            this.raw = raw;
-            this.source = source;
-            this.command = command;
-            if (target != null)
-            {
-                string[] dummy = target.Split(' ');
+            get; private set;
+        }
+        public string Source
+        {
+            get; private set;
+        }
+        public string Command
+        {
+            get; private set;
+        }
 
-                this.target = dummy[0];
-                this.targetParams = (dummy.Length == 2 ? dummy[1] : null);
+        public string Target
+        {
+            get; private set;
+        }
+        public string Message
+        {
+            get; private set;
+        }
+        public string TargetParams
+        {
+            get; private set;
+        }
+        public string Sender
+        {
+            get; private set;
+        }
+        public string Host
+        {
+            get; private set;
+        }
+        public IRCServer Server
+        {
+            get; private set;
+        }
+
+        public IncomingMessage(IRCServer Server, string Raw, string Source, string Command, string Target, string Message)
+        {
+            this.Server = Server;
+            this.Raw = Raw;
+            this.Source = Source;
+            this.Command = Command;
+            if (Command.Equals("PRIVMSG") || Command.Equals("NICK"))
+            {
+                Sender = Source.Substring(0, Source.IndexOf("!"));
+                Host = Source.Substring(Source.IndexOf("@") + 1);
+            }
+            if (Target != null)
+            {
+                string[] dummy = Target.Split(' ');
+
+                this.Target = dummy[0];
+                TargetParams = (dummy.Length == 2 ? dummy[1] : null);
             }
             else
             {
-                this.target = this.targetParams = null;
+                this.Target = TargetParams = null;
             }
-            if (message == null)
+            if (Message == null)
             {
-                this.message = "";
+                this.Message = "";
             }
             else
             {
-                this.message = message.Trim();
+                this.Message = Message.Trim();
             }
-        }
-        public string GetTargetParams()
-        {
-            return targetParams;
-        }
-        public string GetCommand()
-        {
-            return command;
-        }
-
-        public string GetRaw()
-        {
-            return raw;
-        }
-
-        public IRCServer GetServer()
-        {
-            return server;
-        }
-
-        public string GetMessage()
-        {
-            return message;
-        }
-
-        public string GetTarget()
-        {
-            return target;
-        }
-
-        public string GetSource()
-        {
-            return source;
         }
 
         public bool HasMessage()
         {
-            return message != null && message.Length > 0;
+            return Message != null && Message.Length > 0;
         }
 
         public bool IsDestChannel()
         {
-            return GetCommand().Equals("PRIVMSG") && GetTarget().StartsWith("#");
+            return Command.Equals("PRIVMSG") && Target.StartsWith("#");
         }
 
         public bool IsDestMe()
         {
-            return GetCommand().Equals("PRIVMSG") && GetTarget().ToLower().Equals(server.Nick.ToLower());
+            return Command.Equals("PRIVMSG") && Target.Equals(Server.Nick, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private string GetSendDest()
+        {
+            if (IsDestChannel())
+            {
+                return Target;
+            }
+            else
+            {
+                return Sender;
+            }
         }
 
         public void SendChat(string text)
         {
-            GetServer().SendMessage(GetTarget(), text);
-        }
-
-        public string GetNick()
-        {
-           return  GetSource().Substring(0, GetSource().IndexOf('!'));
+            Server.SendMessage(GetSendDest(), text);
         }
     }
 }

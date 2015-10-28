@@ -4,13 +4,13 @@
     {
         public void Handle(IncomingMessage msg)
         {
-            msg.GetServer().Write("PONG " + msg.GetMessage());
-            msg.GetServer().Flush();
+            msg.Server.Write("PONG " + msg.Message);
+            msg.Server.Flush();
         }
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-            return msg.GetCommand().Equals("PING");
+            return msg.Command.Equals("PING");
         }
     }
 }

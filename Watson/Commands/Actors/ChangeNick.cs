@@ -6,7 +6,7 @@
         {
             if (msg.HasMessage())
             {
-                string nick = msg.GetMessage().Split(' ')[0];
+                string nick = msg.Message.Split(' ')[0];
                 server.Nick = nick;
             }
         }

@@ -9,7 +9,7 @@ namespace Watson.Message
         {
             if (message.IsDestChannel())
             {
-                MarkovDatabaseAdapter.MarkovLearn(message.GetMessage());
+                MarkovDatabaseAdapter.MarkovLearn(message.Message);
                 if (CommandManager.RANDOM.Next() * 100 <= Markov.REPLY_RATE)
                 {
                     string markov = MarkovDatabaseAdapter.MarkovGenerate();
@@ -28,6 +28,7 @@ namespace Watson.Message
 
         public MarkovListener()
         {
+
             if(!MarkovDatabaseAdapter.Setup())
             {
                 // oh no

@@ -23,9 +23,9 @@ namespace Watson.Commands.Actors
             }
 
 
-            if (COMMAND_REGEX.IsMatch(message.GetMessage()))
+            if (COMMAND_REGEX.IsMatch(message.Message))
             {
-                Match m = COMMAND_REGEX.Match(message.GetMessage());
+                Match m = COMMAND_REGEX.Match(message.Message);
                 string cmd = m.Groups[1].Value;
 
                 if (cmd.Equals("about"))

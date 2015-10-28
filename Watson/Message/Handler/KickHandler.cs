@@ -6,8 +6,8 @@ namespace Watson.Message.Handler
     {
         public void Handle(IncomingMessage msg)
         {
-            IRCServer server = msg.GetServer();
-            string target = msg.GetTarget();
+            IRCServer server = msg.Server;
+            string target = msg.Target;
 
             if (server.GetChannel(target).Reconnect)
             {
@@ -21,13 +21,13 @@ namespace Watson.Message.Handler
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-            string nick = msg.GetTargetParams();
+            string nick = msg.TargetParams;
             if (nick == null)
             {
                 return false;
             }
 
-            if (msg.GetCommand().Equals("KICK") && nick.Equals(msg.GetServer().Nick))
+            if (msg.Command.Equals("KICK") && nick.Equals(msg.Server.Nick))
             {
                 return true;
             }

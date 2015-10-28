@@ -8,7 +8,7 @@ namespace Watson.Commands.Actors
         {
             if (msg.HasMessage())
             {
-                Expression e = new Expression(msg.GetMessage());
+                Expression e = new Expression(msg.Message);
                 msg.SendChat(e.Evaluate().ToString());
             }
         }

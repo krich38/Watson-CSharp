@@ -4,8 +4,8 @@
     {
         public void Handle(IncomingMessage msg)
         {
-            IRCServer server = msg.GetServer();
-            if (msg.GetCommand().Equals("001"))
+            IRCServer server = msg.Server;
+            if (msg.Command.Equals("001"))
             {
                 foreach (IRCChannel chan in server.GetChannels())
                 {
@@ -16,7 +16,7 @@
                 server.Flush();
                 server.Connected = true;
             }
-            else if (msg.GetRaw().Contains("No more connections allowed from your host via this connect class"))
+            else if (msg.Raw.Contains("No more connections allowed from your host via this connect class"))
             {
                 // todo: set reconnect off here
             }
@@ -24,8 +24,8 @@
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-            //Console.Write(msg.GetCommand());
-            return msg.GetCommand().Equals("001") || msg.GetRaw().Contains("No more connections allowed from your host via this connect class");
+            //Console.Write(msg.Command);
+            return msg.Command.Equals("001") || msg.Raw.Contains("No more connections allowed from your host via this connect class");
         }
     }
 
