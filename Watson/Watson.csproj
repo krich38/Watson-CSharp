@@ -47,6 +47,10 @@
       <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -76,7 +80,9 @@
     <Compile Include="Commands\Actors\Kill.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\Actors\Uptime.cs" />
+    <Compile Include="Commands\Actors\Weather.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Message\Handler\KickHandler.cs" />
     <Compile Include="Message\Handler\ProtocolHandler.cs" />
@@ -92,9 +98,11 @@
     <Compile Include="Message\Handler\PingHandler.cs" />
     <Compile Include="Commands\Actors\Say.cs" />
     <Compile Include="IRCServer.cs" />
+    <Compile Include="Message\UserSeenListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol.cs" />
+    <Compile Include="test\TestWeather.cs" />
     <Compile Include="UserAccess.cs" />
   </ItemGroup>
   <ItemGroup>

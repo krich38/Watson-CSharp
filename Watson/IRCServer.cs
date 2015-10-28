@@ -54,6 +54,11 @@ namespace Watson
         {
             get; set;
         }
+
+        public string File
+        {
+            get; private set;
+        }
         private List<IRCChannel> channels;
         private ConnectionWorker worker;
         public Dictionary<string, UserAccess> Users {
@@ -63,7 +68,10 @@ namespace Watson
         }
 
         private bool attemptingNick;
-
+        public bool LoggingRaw
+        {
+            get; private set;
+        }
 
 
         public IRCServer(string IP, int PORT, List<IRCChannel> channels)
@@ -73,8 +81,9 @@ namespace Watson
             this.channels = channels;
         }
 
-        public IRCServer(string IP, int PORT, List<IRCChannel> channels, bool SSL, string Nick, string Pass, string AltNick, string RealName, Dictionary<string, UserAccess> Users)
+        public IRCServer(string File, string IP, int PORT, List<IRCChannel> channels, bool SSL, string Nick, string Pass, string AltNick, string RealName, Dictionary<string, UserAccess> Users, bool LoggingRaw)
         {
+            this.File = File;
             this.IP = IP;
             this.PORT = PORT;
             this.channels = channels;
@@ -84,7 +93,7 @@ namespace Watson
             this.AltNick = AltNick;
             this.RealName = RealName;
             this.Users = Users;
-
+            this.LoggingRaw = LoggingRaw;
         }
 
         public void Write(string text)

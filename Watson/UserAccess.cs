@@ -33,5 +33,21 @@ namespace Watson
             int requiredOrdinal = (int)requiredAccess;
             return userOrdinal >= requiredOrdinal;
         }
+
+        public static int GetByValue(UserAccess access)
+        {
+            if (access == UserAccess.FULL_USER)
+            {
+                return 2;
+            }
+            else if (access == UserAccess.HALF_USER)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace Watson.Message
                     //save here
                     msg.Server.Users[msg.Host] = found;
                     msg.SendChat("Thank you for authenticating, you have been granted " + found + " access.");
+                    Configuration.Save(msg.Server);
                 }
             }
             else

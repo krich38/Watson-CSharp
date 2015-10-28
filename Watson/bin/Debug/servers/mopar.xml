@@ -1,26 +1,21 @@
-<server>
-	<connection ip="irc.moparisthebest.com" port="6697">
-		<name>Watson</name>
-		<pass>yamaha</pass>
-		<altnick>Wattson</altnick>
-		<realname>Watson</realname>
-		<ssl>true</ssl>
-		<channels>	
-			<channel>
-				<name>#triumvirate</name>
-				<reconnect>true</reconnect>
-			</channel>		
-			<channel>
-				<name>#bottest</name>
-				<reconnect>false</reconnect>
-			</channel>
-			
-		</channels>
-		<users>
-			<user>
-				<host>users-elo.qon.aoch8u.IP</host>
-				<access>2</access>
-			</user>
-		</users>
-	</connection>
-</server>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<connection ip="irc.moparisthebest.com" port="6697">
+  <name>Watson</name>
+  <pass>cocks</pass>
+  <altnick>cocks</altnick>
+  <realname>cocks</realname>
+  <ssl>true</ssl>
+  <lograw>true</lograw>
+  <channels>
+    <channel>
+      <name>#bottest</name>
+      <reconnect>true</reconnect>
+    </channel>
+  </channels>
+  <users>
+    <user>
+      <host>users-elo.qon.aoch8u.IP</host>
+      <access>2</access>
+    </user>
+  </users>
+</connection>

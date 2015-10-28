@@ -13,7 +13,7 @@ namespace Watson
             {
                 m_Connection = new SQLiteConnection("Data Source=watson.db;Version=3;");
                 m_Connection.Open();
-                
+
                 return true;
             }
             catch (Exception e)
@@ -62,6 +62,34 @@ namespace Watson
         {
             SQLiteCommand command = new SQLiteCommand(sql, m_Connection);
             return command.ExecuteReader();
+        }
+
+        public static string GetKeyValue(IRCServer server, string key)
+        {
+
+            SQLiteCommand cmd = new SQLiteCommand("select value from keyvalues where server = @ip and key = @key", GetConnection());
+            cmd.Parameters.AddWithValue("@ip", server.IP);
+            cmd.Parameters.AddWithValue("@key", key);
+            SQLiteDataReader rs = cmd.ExecuteReader();
+            if (rs.HasRows)
+            {
+                if (rs.Read())
+                {
+                    return rs["value"].ToString();
+                }
+            }
+
+            return null;
+        }
+
+        public static void SetKeyValue(IRCServer server, string key, object value)
+        {
+                SQLiteCommand cmd = new SQLiteCommand("insert into keyvalues (server, key, value) values (@server, @key, @value)", GetConnection());
+                cmd.Parameters.AddWithValue("@server", server.IP);
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Parameters.AddWithValue("@value", value.ToString());
+                cmd.ExecuteNonQuery();
+           
         }
     }
 }

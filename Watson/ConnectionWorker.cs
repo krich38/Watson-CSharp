@@ -66,7 +66,11 @@ namespace Watson
                             ml.Handle(msg);
                         }
                     }
-                    Console.Write(msg.Raw + "\n");
+                    
+                    if(server.LoggingRaw)
+                    {
+                        Console.WriteLine(line);
+                    }
                 }
                 else
                 {
