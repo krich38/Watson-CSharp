@@ -25,6 +25,5 @@ C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\Syst
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.xml
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\bin\Debug\System.Data.SQLite.xml
-C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\obj\Debug\Watson.csprojResolveAssemblyReference.cache
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\obj\Debug\Watson.exe
 C:\Users\Kyle\Documents\Visual Studio 2015\Projects\Watson\Watson\obj\Debug\Watson.pdb

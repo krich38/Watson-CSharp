@@ -36,7 +36,7 @@ namespace Watson.Commands.Actors
                     }
 
                     string markov = MarkovDatabaseAdapter.MarkovFind(m.Groups[2].Value, m.Groups[3].Value);
-                    if (markov == null)
+                    if (markov == null || markov.Equals(""))
                     {
                         message.SendChat("I can't :(");
                     }

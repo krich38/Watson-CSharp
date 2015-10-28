@@ -26,12 +26,11 @@ namespace Watson.Commands
                 string found1 = null, found2 = null;
                 if (rs.Read())
                 {
-                    found1 = rs["seed_a"].ToString();
+                    found1 = rs["seed_a"].ToString(); found2 = rs["seed_b"].ToString();
                 }
-                if (rs.Read())
-                {
-                    found2 = rs["seed_b"].ToString();
-                }
+
+
+
                 return MarkovGenerate(found1, found2);
             }
             return null;
@@ -58,12 +57,9 @@ namespace Watson.Commands
                 string found1 = null, found2 = null;
                 if (rs.Read())
                 {
-                    found1 = rs["seed_a"].ToString();
+                    found1 = rs["seed_a"].ToString(); found2 = rs["seed_b"].ToString();
                 }
-                if (rs.Read())
-                {
-                    found2 = rs["seed_b"].ToString();
-                }
+
 
                 return MarkovGenerate(found1, found2);
             }
@@ -91,6 +87,7 @@ namespace Watson.Commands
                 result.Append(seed2);
             }
             int wordcount = CommandManager.RANDOM.Next(30) + 10;
+
             int type = CommandManager.RANDOM.Next(3);
             switch (type)
             {

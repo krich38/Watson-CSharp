@@ -13,6 +13,7 @@ namespace Watson
             {
                 m_Connection = new SQLiteConnection("Data Source=watson.db;Version=3;");
                 m_Connection.Open();
+                
                 return true;
             }
             catch (Exception e)
