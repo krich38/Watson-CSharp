@@ -22,6 +22,30 @@ namespace Watson
             }
         }
 
+        public static UserAccess AuthenticateUser(String username, String password)
+        {
+            UserAccess access = UserAccess.ANYONE;
+            try
+            {
+                SQLiteDataReader reader = ExecuteQuery("SELECT * FROM users WHERE username='" + username + "'");
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        if (reader.GetString(1).Equals(password))
+                        {
+                            return UserAccessAttr.GetByAccess(reader.GetInt32(2));
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return access;
+        }
+
         public static SQLiteConnection GetConnection()
         {
             return m_Connection;

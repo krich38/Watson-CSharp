@@ -15,7 +15,7 @@ namespace Watson.Message
                     string markov = MarkovDatabaseAdapter.MarkovGenerate();
                     if (markov != null)
                     {
-                        message.SendChat(markov);
+                        //message.SendChat(markov);
                     }
                 }
             }

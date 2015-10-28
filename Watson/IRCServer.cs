@@ -18,14 +18,14 @@ namespace Watson
         {
             get { return _Nick; }
             set
-            {
+            {_Nick = value;
                 if(Connected)
                 {
-                    _Nick = value;
+                    
                     SetAttemptNickChange(true);
                     Write("NICK " + _Nick);
                     Flush();
-                }
+                } 
             }
         }
         public string AltNick

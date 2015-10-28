@@ -80,6 +80,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="Message\Handler\KickHandler.cs" />
     <Compile Include="Message\Handler\ProtocolHandler.cs" />
+    <Compile Include="Message\LoginListener.cs" />
     <Compile Include="Message\MarkovListener.cs" />
     <Compile Include="Message\CommandListener.cs" />
     <Compile Include="Commands\CommandManager.cs" />

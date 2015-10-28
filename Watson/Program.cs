@@ -62,6 +62,7 @@ namespace Watson
                     UserAccess ua = UserAccessAttr.GetByAccess(int.Parse(access));
                     this.users.Add(host, ua);
                 }
+                Console.WriteLine("LALALALALA: " + nick);
                 IRCServer server = new IRCServer(ip, port, channels, ssl, nick, pass, altnick, realname);
                 toConnect.Add(server);
             }

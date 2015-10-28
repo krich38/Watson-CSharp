@@ -104,6 +104,7 @@ namespace Watson
             LISTENERS.Add(new MarkovListener());
             LISTENERS.Add(new ProtocolHandler());
             LISTENERS.Add(new KickHandler());
+            LISTENERS.Add(new LoginListener());
 
             this.connection = new TcpClient(server.IP, server.PORT);
             this.stream = connection.GetStream();
@@ -143,6 +144,7 @@ namespace Watson
 
 
             while (!stream.CanWrite) ;
+            Console.WriteLine("LAL: " + server.Nick);
             this.writer.Write("NICK " + server.Nick + "\r\n");
             this.writer.Write("USER " + server.RealName + " 0 * :" + server.RealName + "\r\n");
             this.writer.Flush();
