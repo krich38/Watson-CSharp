@@ -1,5 +1,4 @@
-﻿using System;
-using NCalc;
+﻿using NCalc;
 
 namespace Watson.Commands.Actors
 {

@@ -82,6 +82,7 @@
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\Actors\Seen.cs" />
     <Compile Include="Commands\Actors\Uptime.cs" />
+    <Compile Include="Commands\Actors\UrbanDictionary.cs" />
     <Compile Include="Commands\Actors\Weather.cs" />
     <Compile Include="Commands\MarkovDatabaseAdapter.cs" />
     <Compile Include="Configuration.cs" />

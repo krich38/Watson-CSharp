@@ -24,7 +24,7 @@ namespace Watson
             COMMANDS.Add("weather", new Weather());
             COMMANDS.Add("seen", new Seen());
             COMMANDS.Add("help", new Help());
-
+            COMMANDS.Add("urban", new UrbanDictionary());
         }
 
         public static CommandManager GetInstance()
@@ -49,9 +49,9 @@ namespace Watson
         public string AvailableCommands()
         {
             StringBuilder cmds = new StringBuilder();
-            foreach(string s in COMMANDS.Keys)
+            foreach (string s in COMMANDS.Keys)
             {
-                if(cmds.Length >0)
+                if (cmds.Length > 0)
                 {
                     cmds.Append(", ");
                 }

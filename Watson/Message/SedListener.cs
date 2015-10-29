@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Watson.Message
 {
@@ -6,6 +7,7 @@ namespace Watson.Message
     {
         private const string SED_PATTERN = "^s/(.*?)/(.*?)/(g?)";
         private const string LASTMESSAGE_PREFIX = "sed.lastmessage.";
+        private const int TIMEOUT = 60 * 60 * 1000;
 
         private Regex SED_REGEX = new Regex(SED_PATTERN);
         public void Handle(IncomingMessage msg)
@@ -59,6 +61,14 @@ namespace Watson.Message
                 return text;
             }
             return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
+
+        public SedListener()
+        {
+            Timer t = new Timer((obj) =>
+            {
+                Database.ExecuteUpdate("delete from keyvalues where key like '" + LASTMESSAGE_PREFIX + "%'");
+            }, null, 0, TIMEOUT);
         }
     }
 }

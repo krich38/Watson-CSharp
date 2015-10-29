@@ -63,7 +63,6 @@ namespace Watson.Commands.Actors
                 {
                     string location_encoded = Uri.EscapeUriString(location);
                     Database.SetKeyValue(msg.Server, "weather.lastquery." + location, Environment.TickCount);
-                    Console.WriteLine(WEATHER_URL + location_encoded);
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(WEATHER_URL + location_encoded);
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     string responseContent;
@@ -119,7 +118,7 @@ namespace Watson.Commands.Actors
             Timer t = new Timer((obj) =>
             {
                 Database.ExecuteUpdate("delete from keyvalues where key like (select 'weather.%.' || substr(key, 19) from keyvalues where key like 'weather.lastquery.%' and value < " + (Environment.TickCount - TIMEOUT) + ")");
-            }, null, TIMEOUT * 2, Timeout.Infinite);
+            }, null, 0, TIMEOUT*2);
         }
 
         public string Help()

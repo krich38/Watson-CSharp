@@ -35,7 +35,7 @@ namespace Watson.Commands.Actors
 
         public string Help()
         {
-            return "usage: seen: nick";
+            return "usage: seen <nick>";
         }
     }
 }
