@@ -1,2 +1,0 @@
-Watson.exe
-pause
