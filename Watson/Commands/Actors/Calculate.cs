@@ -1,4 +1,5 @@
-﻿using NCalc;
+﻿using System;
+using NCalc;
 
 namespace Watson.Commands.Actors
 {
@@ -17,5 +18,11 @@ namespace Watson.Commands.Actors
         {
             return UserAccess.ANYONE;
         }
+
+        public string Help()
+        {
+            return "usage; calc expression";
+        }
+
     }
 }

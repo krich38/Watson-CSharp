@@ -20,5 +20,10 @@
         {
             return UserAccess.FULL_USER;
         }
+
+        public string Help()
+        {
+            return "usage: kill <quit message here>";
+        }
     }
 }

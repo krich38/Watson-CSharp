@@ -18,7 +18,8 @@ namespace Watson
             new ProtocolHandler(),
             new KickHandler(),
             new LoginListener(),
-            new UserSeenListener()
+            new UserSeenListener(),
+            new SedListener()
         });
 
 

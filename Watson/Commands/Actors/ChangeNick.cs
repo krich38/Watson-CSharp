@@ -15,5 +15,10 @@
         {
             return UserAccess.HALF_USER;
         }
+
+        public string Help()
+        {
+            return "usage: nick <newnick>";
+        }
     }
 }

@@ -47,5 +47,10 @@ namespace Watson.Commands.Actors
                 }
             }
         }
+
+        public string Help()
+        {
+            return "usage: chat [about|replynick|replyrate] <context>";
+        }
     }
 }

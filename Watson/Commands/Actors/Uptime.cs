@@ -67,5 +67,11 @@ namespace Watson.Commands.Actors
             }
             msg.SendChat("Current uptime: " + reply);
         }
+
+
+        public string Help()
+        {
+            return "usage: uptime";
+        }
     }
 }

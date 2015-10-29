@@ -32,5 +32,10 @@ namespace Watson.Commands.Actors
                 msg.SendChat(string.Format("Last seen {0}: {1} ago, {2}", nick, answer, lastSeenEvent));
             }
         }
+
+        public string Help()
+        {
+            return "usage: seen: nick";
+        }
     }
 }

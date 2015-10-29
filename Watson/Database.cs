@@ -23,7 +23,7 @@ namespace Watson
             }
         }
 
-        public static UserAccess AuthenticateUser(String username, String password)
+        public static UserAccess AuthenticateUser(string username, string password)
         {
             UserAccess access = UserAccess.ANYONE;
             try

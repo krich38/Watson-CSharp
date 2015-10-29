@@ -87,7 +87,7 @@ namespace Watson.Commands.Actors
                     }
 
                     JToken main = list["main"]; JToken wind = list["wind"];
-                    w.Append(String.Format("Temp {0}c (min {1}c/max {2}c), {3}% Humidity, {4} hPa, {5}% Cloudy, Wind Speed {6}m/s",
+                    w.Append(string.Format("Temp {0}c (min {1}c/max {2}c), {3}% Humidity, {4} hPa, {5}% Cloudy, Wind Speed {6}m/s",
                         main["temp"].ToString(),
                         main["temp_min"].ToString(),
                         main["temp_max"].ToString(),
@@ -120,6 +120,11 @@ namespace Watson.Commands.Actors
             {
                 Database.ExecuteUpdate("delete from keyvalues where key like (select 'weather.%.' || substr(key, 19) from keyvalues where key like 'weather.lastquery.%' and value < " + (Environment.TickCount - TIMEOUT) + ")");
             }, null, TIMEOUT * 2, Timeout.Infinite);
+        }
+
+        public string Help()
+        {
+            return "usage: weather [location]";
         }
     }
 }

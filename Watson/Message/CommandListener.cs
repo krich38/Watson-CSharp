@@ -60,7 +60,7 @@ namespace Watson
 
         public CommandListener()
         {
-            commands = CommandManager.getInstance();
+            commands = CommandManager.GetInstance();
         }
     }
 }

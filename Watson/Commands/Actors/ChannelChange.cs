@@ -42,13 +42,18 @@
             }
             else
             {
-                msg.SendChat("Incorrect syntax! Usage: join #example       OR     part #example <message here>");
+                msg.SendChat(Help());
             }
         }
 
         public UserAccess GetRequiredAccess()
         {
             return UserAccess.HALF_USER;
+        }
+
+        public string Help()
+        {
+            return "usage: [part|join #channel <part message here>";
         }
     }
 }

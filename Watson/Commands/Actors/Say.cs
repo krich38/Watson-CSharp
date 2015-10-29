@@ -23,5 +23,10 @@
         {
             return UserAccess.HALF_USER;
         }
+
+        public string Help()
+        {
+            return "usage: say <text to say>";
+        }
     }
 }
