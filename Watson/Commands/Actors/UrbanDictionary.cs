@@ -34,7 +34,7 @@ namespace Watson.Commands.Actors
             {
                 lastquery = long.Parse(Database.GetKeyValue(msg.Server, LASTQUERY_PREFIX + term));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 lastquery = -1;
             }
@@ -59,7 +59,7 @@ namespace Watson.Commands.Actors
                 {
                     term_encoded = Uri.EscapeUriString(term);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     msg.SendChat(msg.Sender + ": Error parsing location," + msg.Message);
                     return;
@@ -80,7 +80,7 @@ namespace Watson.Commands.Actors
                 {
                     definition.Append(json["list"][0]["definition"].ToString());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     msg.SendChat(msg.Sender + ": Error parsing urban data for, " + msg.Message);
                     return;

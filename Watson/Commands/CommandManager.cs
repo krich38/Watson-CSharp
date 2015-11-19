@@ -25,6 +25,7 @@ namespace Watson
             COMMANDS.Add("seen", new Seen());
             COMMANDS.Add("help", new Help());
             COMMANDS.Add("urban", new UrbanDictionary());
+            COMMANDS.Add("shannan?", new Shannan());
         }
 
         public static CommandManager GetInstance()

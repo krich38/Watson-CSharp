@@ -89,29 +89,32 @@ namespace Watson
         public ConnectionWorker(IRCServer server)
         {
             this.server = server;
-            program = Program.GetInstance();
+            program = Program.INSTANCE;
             server.SetWorker(this);
-
-            connection = new TcpClient(server.IP, server.PORT);
-            stream = connection.GetStream();
-            if (server.SSL)
+            try
             {
+                connection = new TcpClient(server.IP, server.PORT);
+                stream = connection.GetStream();
+                if (server.SSL)
+                {
 
-                stream = Protocol.Secure(server, stream);
+                    stream = Protocol.Secure(server, stream);
+                }
+                Console.WriteLine("Starting " + server.IP);
+                this.reader = new StreamReader(stream);
+                this.writer = new StreamWriter(stream);
+
+
+                while (!stream.CanWrite) ;
+                this.writer.Write("NICK " + server.Nick + "\r\n");
+                this.writer.Write("USER " + server.RealName + " 0 * :" + server.RealName + "\r\n");
+                this.writer.Flush();
+                Working = true;
             }
-            this.reader = new StreamReader(stream);
-            this.writer = new StreamWriter(stream);
-
-
-            while (!stream.CanWrite) ;
-            Console.WriteLine("LAL: " + server.Nick);
-            this.writer.Write("NICK " + server.Nick + "\r\n");
-            this.writer.Write("USER " + server.RealName + " 0 * :" + server.RealName + "\r\n");
-            this.writer.Flush();
-            Working = true;
+            catch (IOException)
+            {
+                Console.WriteLine("Unable to connect to " + server.IP + ", possibly SSL mismatch or host doesn't exist.");
+            }
         }
-
-
-
     }
 }

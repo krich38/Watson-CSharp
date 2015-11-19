@@ -169,7 +169,7 @@ namespace Watson
         {
             // do all parts etc here
             worker.Stop();
-            Program.GetInstance().OnDispose(this);
+            Program.INSTANCE.OnDispose(this);
         }
 
         public void SetAttemptNickChange(bool attemptingNick)

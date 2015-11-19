@@ -8,17 +8,32 @@ namespace Watson
 {
     class Program
     {
-        private static volatile Program INSTANCE;
+        private static object obj = new object();
+        private static Program _instance;
+        public static Program INSTANCE
+        {
+            get
+            {
+                lock (obj)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new Program();
+                    }
+                    return _instance;
+                }
+            }
+        }
+
 
         private List<IRCServer> toConnect;
         private List<IRCServer> connected;
 
         static void Main(string[] args)
         {
-            Program program = new Program();
+            Program program = INSTANCE;
             if (program.Load())
             {
-                INSTANCE = program;
                 program.ConnectAll();
             }
         }
@@ -46,18 +61,12 @@ namespace Watson
                 ConnectionWorker worker = new ConnectionWorker(server);
                 Thread t = new Thread(worker.Process);
                 t.Start();
-                Console.WriteLine("Starting " + server.IP);
             }
         }
 
         public bool IsRunning()
         {
             return true;
-        }
-
-        public static Program GetInstance()
-        {
-            return INSTANCE;
         }
 
         public void OnDispose(IRCServer server)

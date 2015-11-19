@@ -81,6 +81,7 @@
     <Compile Include="Commands\Actors\Kill.cs" />
     <Compile Include="Commands\Actors\Markov.cs" />
     <Compile Include="Commands\Actors\Seen.cs" />
+    <Compile Include="Commands\Actors\Shannan.cs" />
     <Compile Include="Commands\Actors\Uptime.cs" />
     <Compile Include="Commands\Actors\UrbanDictionary.cs" />
     <Compile Include="Commands\Actors\Weather.cs" />

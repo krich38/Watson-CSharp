@@ -42,7 +42,7 @@ namespace Watson.Commands.Actors
                 {
                     lastquery = long.Parse(Database.GetKeyValue(msg.Server, "weather.lastquery." + location));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     lastquery = -1;
                 }

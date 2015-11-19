@@ -72,6 +72,7 @@ namespace Watson
             connection.Add(new XElement("altnick", server.AltNick));
             connection.Add(new XElement("realname", server.RealName));
             connection.Add(new XElement("ssl", server.SSL));
+            connection.Add(new XElement("lograw", server.LoggingRaw));
             xd.Add(connection);
             XElement channels = new XElement("channels");
             foreach (IRCChannel chan in server.GetChannels())

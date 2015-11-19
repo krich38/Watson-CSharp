@@ -18,13 +18,12 @@
             }
             else if (msg.Raw.Contains("No more connections allowed from your host via this connect class"))
             {
-                // todo: set reconnect off here
+                server.Dispose();
             }
         }
 
         public bool ShouldHandle(IncomingMessage msg)
         {
-            //Console.Write(msg.Command);
             return msg.Command.Equals("001") || msg.Raw.Contains("No more connections allowed from your host via this connect class");
         }
     }
